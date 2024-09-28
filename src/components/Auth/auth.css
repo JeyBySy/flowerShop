@@ -1,0 +1,6 @@
+form input {
+  @apply text-sm;
+}
+form label {
+  @apply text-xs cursor-pointer;
+}
