@@ -17,3 +17,13 @@ section {
 .submenu-items {
   @apply w-[150px] py-3 px-2 hover:bg-persian-rose-400 hover:text-white cursor-pointer h-[100%] justify-start items-center flex;
 }
+.btn_styles-1,
+.btn_styles-2 {
+  @apply py-2 text-white capitalize rounded w-[200px];
+}
+.btn_styles-1 {
+  @apply bg-zest-700;
+}
+.btn_styles-2 {
+  @apply bg-avocado-700;
+}

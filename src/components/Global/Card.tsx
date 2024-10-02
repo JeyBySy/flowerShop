@@ -1,15 +1,19 @@
+import { Link } from "react-router-dom";
+
 interface CardProps {
     itemName: string;
     rating: number;
     price: number;
     imageUrl: string;
     totalSell: number;
-    discount: number
+    discount: number,
+    keyItem?: number
 }
 
-const Card: React.FC<CardProps> = ({ itemName, rating, price, imageUrl, totalSell, discount = 0 }) => {
+const Card: React.FC<CardProps> = ({ itemName, rating, price, imageUrl, totalSell, discount = 0, keyItem }) => {
+    const itemNameConvert: string = itemName.trim().toLowerCase().replace(/\s+/g, '-');
     return (
-        <a href={`/product/${itemName}`} rel="noopener noreferrer">
+        <Link to={`/product/${itemNameConvert}`} key={keyItem}>
             <div className="border relative p-4 rounded hover:shadow-2xl transition-shadow duration-300 w-[200px]  max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
                 {discount != 0 && (
                     <span className="absolute right-1 bg-persian-rose-500 top-0 rounded-b-full p-2 text-white text-xs flex items-center justify-center">{discount}%</span>
@@ -27,7 +31,7 @@ const Card: React.FC<CardProps> = ({ itemName, rating, price, imageUrl, totalSel
                     </div>
                 </div>
             </div>
-        </a>
+        </Link>
     );
 };
 export default Card;
