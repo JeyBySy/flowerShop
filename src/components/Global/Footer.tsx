@@ -1,11 +1,11 @@
-import { Flower } from "lucide-react"
+import ShopHeader from "./ShopHeader"
 
 const Footer = () => {
     return (
         <div className="w-full min-h-[450px] bottom-0 bg-avocado-600 text-white relative py-5">
             <section>
                 <div className="flex text-2xl items-center justify-start">
-                    <Flower color="#e08100" />Flower Shop
+                    <ShopHeader />
                 </div>
                 <div className="flex justify-between lg:flex-nowrap flex-wrap gap-10 pt-3  text-sm">
                     <div className="lg:w-[10%] flex-grow items-center text-justify leading-loose">

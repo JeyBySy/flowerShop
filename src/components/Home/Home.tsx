@@ -1,5 +1,5 @@
 import Divider from "../Global/Divider"
-import Products from "./Products"
+import Products from "./ShowProducts"
 import Promotion from "./Promotion"
 import Testimonial from "./Testimonial"
 
@@ -9,8 +9,8 @@ const Home: React.FC = () => {
             <Promotion />
             <Divider />
             <Products />
+            <Divider />
             <Testimonial />
-            <Products />
         </div>
     );
 }

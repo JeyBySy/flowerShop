@@ -1,6 +1,8 @@
-import { Flower, Search, ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import '../../icon.css'
+import ShopHeader from "./ShopHeader";
 
 const Navbar = () => {
     const [isHoveredOccasions, setIsHoveredOccasions] = useState<boolean>(false);
@@ -38,18 +40,18 @@ const Navbar = () => {
                     </span>
                     <div className="flex-1 text-center text-sm">
                         <div className="flex items-center gap-5 justify-end">
-                            <div className="cursor-pointer"><a href="/track-order">Track Order</a></div>
-                            <div className="cursor-pointer"><a href="/login">Login</a></div>
-                            <div className="cursor-pointer"><a href="/register">Register</a></div>
+                            <div className="cursor-pointer"><Link to="/track-order">Track Order</Link></div>
+                            <div className="cursor-pointer"><Link to="/login">Login</Link></div>
+                            <div className="cursor-pointer"><Link to="/register">Register</Link></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="container mx-auto h-[60px] flex items-center">
                 <div className="flex  w-full">
-                    <a href="/" className="flex items-center">
-                        <Flower color="#e08100" />Flower Shop
-                    </a>
+                    <Link to="/" className="flex items-center">
+                        <ShopHeader />
+                    </Link>
                 </div>
                 <div className=" w-[50%] flex px-2">
                     <input placeholder="Search" type="text" className="w-full text-sm p-1 rounded rounded-t-none rounded-b-none focus:outline-none border border-persian-rose-500 border-r-0" />
@@ -63,11 +65,11 @@ const Navbar = () => {
                                 <ul className={`submenu ${occasionsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"}`}>
                                     {
                                         occasionsMenuItems.map((item) => (
-                                            <a href={item.toLowerCase()} key={item}>
+                                            <Link to={`/search/occasions/${item.toLowerCase()}`} key={item}>
                                                 <li className="submenu-items">
                                                     {item}
                                                 </li>
-                                            </a>
+                                            </Link>
                                         ))
                                     }
                                 </ul>
@@ -81,11 +83,11 @@ const Navbar = () => {
                                 <ul className={`submenu ${flowersMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
                                     {
                                         flowersMenuItems.map((item) => (
-                                            <a href={item.toLowerCase()} key={item}>
+                                            <Link to={`/search/flowers/${item.toLowerCase()}`} key={item}>
                                                 <li className="submenu-items">
                                                     {item}
                                                 </li>
-                                            </a>
+                                            </Link>
                                         ))
                                     }
                                 </ul>
@@ -99,11 +101,11 @@ const Navbar = () => {
                                 <ul className={`submenu ${treatsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
                                     {
                                         treatsMenuItems.map((item) => (
-                                            <a href={item.toLowerCase()} key={item}>
+                                            <Link to={`/search/treats/${item.toLowerCase()}`} key={item}>
                                                 <li className="submenu-items">
                                                     {item}
                                                 </li>
-                                            </a>
+                                            </Link>
                                         ))
                                     }
                                 </ul>
@@ -118,11 +120,11 @@ const Navbar = () => {
                                     <ul className={`submenu ${giftsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
                                         {
                                             giftsMenuItems.map((item) => (
-                                                <a href={item.toLowerCase()} key={item}>
+                                                <Link to={`/search/gifts/${item.toLowerCase()}`} key={item}>
                                                     <li className="submenu-items">
                                                         {item}
                                                     </li>
-                                                </a>
+                                                </Link>
                                             ))
                                         }
                                     </ul>
