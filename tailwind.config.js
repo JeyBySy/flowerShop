@@ -31,7 +31,7 @@ export default {
           '950': '#172e05',
         },
         'persian-rose': {
-          '50': '#fef1f9',
+          '50': '#fefafc',
           '100': '#fee5f4',
           '200': '#ffcbeb',
           '300': '#ffa1d9',
