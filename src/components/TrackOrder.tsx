@@ -1,8 +1,8 @@
-import React from 'react'
+// import React from 'react'
 
 const TrackOrder = () => {
     return (
-        <div>TrackOrder</div>
+        <section>TrackOrder</section>
     )
 }
 
