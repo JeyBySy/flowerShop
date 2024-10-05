@@ -8,7 +8,7 @@ const Inclusions: React.FC = () => {
             <div className='flex gap-1'>
                 <div className='border rounded flex px-3 py-3 flex-row justify-start items-center cursor-pointer  hover:outline-zest-500 hover:outline transition'>
                     <img src={SampleImage} alt="" className=" w-10 h-8 object-contain" />
-                    <span className='text-xs '>None</span>
+                    <span className='text-xs '>Letter</span>
                 </div>
                 <div className='border rounded flex px-3 py-3 flex-row justify-start items-center cursor-pointer  hover:outline-zest-500 hover:outline transition'>
                     <img src={SampleImage} alt="" className=" w-10 h-8 object-contain" />

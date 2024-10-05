@@ -47,13 +47,70 @@ const Product: React.FC<ProductProps> = ({ data }) => {
                         </div>
                     </div>
                     <div className='flex flex-col '>
-                        <div className='flex flex-col '>
-                            <p className="text-xl font-semibold py-2 border-b-2 border-slate-200">Description</p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur culpa, veniam suscipit ex, repellat facilis tempore distinctio repudiandae autem officiis consequuntur, excepturi dolor quas? Veritatis iste repellendus ab aut corporis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem tempore autem doloribus aperiam enim dignissimos iste rem voluptate, placeat, deserunt excepturi eum repudiandae esse earum. Ratione consequuntur unde hic est. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi natus saepe beatae modi, minus qui rem iusto, eligendi, amet itaque ipsam voluptatem cumque velit est explicabo earum voluptates placeat reprehenderit?
+                        <div className='flex flex-col'>
+                            <p className="text-xl font-semibold py-2 border-b-2 border-slate-200 uppercase">Description</p>
+                            <p className='py-4 px-2'>
+                                10 beautiful yellow tulips nicely arranged in a vase to decorate your household or to thank your loved ones. Also perfect for other celebrations such as birthdays, anniversaries, and Mother's Day.
+                                <br />
+                                Note: Flower components of this product might arrive in buds.
+                            </p>
                         </div>
                         <div className='flex flex-col'>
-                            <p className="text-xl font-semibold  py-2 border-b-2 border-slate-200">Reviews</p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sed neque debitis necessitatibus sunt deserunt adipisci ea, nihil, nam ex eveniet animi. Deserunt facere numquam sequi fugiat aut veritatis? Explicabo, eos.
+                            <p className="text-xl font-semibold  py-2 border-b-2 border-slate-200 uppercase">Ratings</p>
+                            <div className='flex flex-col py-2 px-2'>
+                                <div className='flex flex-row items-center'>
+                                    <div className=' w-full text-xl'>
+                                        Average user rating
+                                        ⭐4.7 /5
+                                    </div>
+                                    <div className=' w-full text-xl'>
+                                        Rating breakdown
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='flex flex-col border-t-2 px-2'>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+                                <div className='p-2 text-sm flex flex-col'>
+                                    <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                                    <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                                    <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,9 +137,9 @@ const Product: React.FC<ProductProps> = ({ data }) => {
                     <Recommendation />
                     <SummaryTotal />
                     <div className='flex gap-1 flex-row justify-end w-full relative'>
-                        <div className='gap-2 flex items-end place-items-baseline'>
-                            <button className='btn_styles-1 h-fit' type='submit'>add to cart</button>
-                            <button className='btn_styles-2 h-fit'>Buy now</button>
+                        <div className='gap-2 flex items-end place-items-baseline border w-full'>
+                            <button className='btn_styles-1' type='submit'>add to cart</button>
+                            <button className='btn_styles-2 '>Buy now</button>
                         </div>
                     </div>
                     <p className='text-sm italic'><span className='text-red-500'>Important!</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex dolor itaque omnis dignissimos nulla aliquam reprehenderit nesciunt impedit aut? Quaerat nesciunt assumenda nisi earum consectetur asperiores cumque laudantium fugiat ullam!</p>

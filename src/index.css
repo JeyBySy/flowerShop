@@ -19,7 +19,8 @@ section {
 }
 .btn_styles-1,
 .btn_styles-2 {
-  @apply py-2 text-white capitalize rounded w-[200px];
+  @apply py-4 text-white capitalize rounded w-full h-fit;
+  /* w-[200px] */
 }
 .btn_styles-1 {
   @apply bg-zest-700;
