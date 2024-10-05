@@ -1,6 +1,6 @@
-// import React from 'react'
+import React from 'react'
 
-const TrackOrder = () => {
+const TrackOrder: React.FC = () => {
     return (
         <section>TrackOrder</section>
     )
