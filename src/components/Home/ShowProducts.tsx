@@ -1,4 +1,6 @@
 import Card from "../Global/Card"
+import SampleImage from '../../assets/flowers/sample.png'
+
 const ShowProducts = () => {
     const products = [
         {
@@ -6,7 +8,7 @@ const ShowProducts = () => {
             itemName: "Flower dahlia",
             rating: 4.5,
             price: 99.99,
-            imageUrl: "/assets/sample.png",
+            imageUrl: SampleImage,
             totalSell: 10,
             discount: 0
 
@@ -16,7 +18,7 @@ const ShowProducts = () => {
             itemName: "Flower sample",
             rating: 4.7,
             price: 599.99,
-            imageUrl: "/assets/sample.png",
+            imageUrl: SampleImage,
             totalSell: 10,
             discount: 10
         },
@@ -25,7 +27,7 @@ const ShowProducts = () => {
             itemName: "Flower sample",
             rating: 4.9,
             price: 1199.99,
-            imageUrl: "/assets/sample.png",
+            imageUrl: SampleImage,
             totalSell: 10,
             discount: 10
         },
@@ -34,7 +36,7 @@ const ShowProducts = () => {
             itemName: "Flower sample",
             rating: 4.3,
             price: 199.99,
-            imageUrl: "/assets/sample.png",
+            imageUrl: SampleImage,
             totalSell: 10,
             discount: 10
         }
