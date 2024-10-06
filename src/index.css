@@ -19,7 +19,7 @@ section {
 }
 .btn_styles-1,
 .btn_styles-2 {
-  @apply py-4 text-white capitalize rounded w-full h-fit;
+  @apply py-4 text-white capitalize rounded  h-fit;
   /* w-[200px] */
 }
 .btn_styles-1 {
