@@ -2,7 +2,7 @@ import ShopHeader from "./ShopHeader"
 
 const Footer = () => {
     return (
-        <div className="w-full min-h-[450px] bottom-0 bg-avocado-600 text-white relative py-5">
+        <div className="w-full min-h-[450px] bottom-0 bg-avocado-600 text-white relative py-5 z-1">
             <section>
                 <div className="flex text-2xl items-center justify-start">
                     <ShopHeader />

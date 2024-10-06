@@ -7,6 +7,7 @@ interface Category {
 }
 
 const SearchByCategory: React.FC<Category> = ({ category = "None" }) => {
+    const cardStyle = "grid grid-cols-2 gap-2 xs:gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
     return (
         <div className='flex flex-col gap-5'>
             Data: {category}
@@ -23,7 +24,7 @@ const SearchByCategory: React.FC<Category> = ({ category = "None" }) => {
                     <option value="3" className='capitalize'>1000 and above</option>
                 </select>
             </div>
-            <div className='flex gap-5'>
+            <div className={cardStyle}>
                 <Card itemName={"sample"} rating={5} price={100} imageUrl={SampleImage} totalSell={4} discount={0} />
 
             </div>
