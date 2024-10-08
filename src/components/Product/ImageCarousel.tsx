@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 const ImageCarousel: React.FC = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const images = [SampleImage, SampleImage, SampleImage, SampleImage, SampleImage, SampleImage2]; // Add your image URLs
+    const images = [SampleImage, SampleImage, SampleImage, SampleImage, SampleImage, SampleImage2];
 
     const handleImageClick = (index: number) => {
         setCurrentImageIndex(index);
@@ -30,11 +30,11 @@ const ImageCarousel: React.FC = () => {
             </div>
 
             {/* Main image display */}
-            <div className="relative flex w-full lg:w-[60%] h-[450px] items-center justify-center mx-auto overflow-hidden">
+            <div className="relative flex w-full lg:w-[75%] h-[450px] items-center justify-center mx-auto overflow-hidden bg-white  ">
                 {/* Previous button */}
-                <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10" onClick={handlePrevImage} >&lt; </button>
-                <img src={images[currentImageIndex]} alt="" className="w-[70%] h-full object-contain" />
-                <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10" onClick={handleNextImage}>&gt;</button>
+                <button className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 border" onClick={handlePrevImage} >&lt; </button>
+                <img src={images[currentImageIndex]} alt="" className="w-[70%] h-full object-contain bg-white" />
+                <button className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10 border" onClick={handleNextImage}>&gt;</button>
             </div>
 
             {/* Mobile scrollable thumbnails */}

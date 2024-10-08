@@ -51,14 +51,14 @@ const ProductForm: React.FC<ProductProps> = ({ data }) => {
                 <span className="text-red-500">Important!</span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex dolor itaque omnis dignissimos nulla aliquam reprehenderit nesciunt impedit aut? Quaerat nesciunt assumenda nisi earum consectetur asperiores cumque laudantium fugiat ullam!
             </p>
             {/* Mobile */}
-            <div className="w-[100%] fixed border bottom-0 left-0 right-0 bg-zest-50 py-2 lg:hidden flex gap-1 justify-evenly z-10 border-t-2">
+            <div className="w-full fixed border bottom-0 left-0 right-0 bg-zest-50 py-2 px-2 lg:hidden flex gap-1 justify-evenly z-10 border-t-2">
                 <div className='w-fit flex items-center gap-2'>
-                    <p className='text-start text-persian-rose-500 text-base uppercase '>Total: </p>
-                    <p className='text-persian-rose-500 text-xl font-bold text-end'>₱1000.00</p>
+                    <p className='text-start text-persian-rose-500 lg:text-base text-xs uppercase '>Total: </p>
+                    <p className='text-persian-rose-500 lg:text-base text-sm font-bold text-end'>₱1000.00</p>
                 </div>
                 <div className='flex flex-row flex-grow gap-1'>
-                    <button className="btn_styles-1 w-2/4" type="submit">Add to Cart</button>
-                    <button className="btn_styles-2 w-2/4">Buy Now</button>
+                    <button className="btn_styles-1 w-2/4 text-sm" type="submit">Add to Cart</button>
+                    <button className="btn_styles-2 w-2/4 text-sm">Buy Now</button>
                 </div>
             </div>
         </form>

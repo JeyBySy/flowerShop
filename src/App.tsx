@@ -9,6 +9,8 @@ import Forgetpage from './pages/Forgetpage';
 import TrackOrderpage from './pages/TrackOrderpage';
 import Searchpage from './pages/Searchpage'; // You can use this to handle dynamic search
 import ProductPage from './pages/ProductPage';
+import Cartpage from './pages/Cartpage';
+import Checkout from './components/Cart/Checkout';
 
 
 const App: React.FC = () => {
@@ -22,6 +24,9 @@ const App: React.FC = () => {
         <Route path="/search/flowers/:flower" element={<Searchpage />} />
         <Route path="/search/treats/:treat" element={<Searchpage />} />
         <Route path="/search/gifts/:gift" element={<Searchpage />} />
+
+        <Route path="/cart" element={<Cartpage />} />
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/product/:item" element={<ProductPage />} />
 

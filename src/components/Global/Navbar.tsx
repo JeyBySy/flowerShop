@@ -47,7 +47,7 @@ const Navbar = () => {
                     <ShopHeader />
                 </Link>
                 <div className="w-2/4 lg:w-[20%] flex px-2">
-                    <input placeholder="Search" type="text" className="w-full text-sm p-1 rounded rounded-t-none rounded-b-none focus:outline-none border border-persian-rose-500 border-r-0" />
+                    <input placeholder="Search" type="text" className="w-full text-xs p-1 rounded rounded-t-none rounded-b-none focus:outline-none border border-persian-rose-500 border-r-0 px-2" />
                     <button className="px-3 py-1 border-l-0 bg-brilliant-rose-500 text-white border border-persian-rose-500">
                         <Search />
                     </button>
@@ -129,10 +129,10 @@ const Navbar = () => {
                             )}
                         </div>
                     )}
-                    <button className="cursor-pointer relative">
-                        <span className="min-w-[25px] absolute -top-3 -right-2 bg-zest-600 text-white rounded-full px-1 py-1 text-xs flex justify-center items-center">1</span>
-                        <ShoppingCart />
-                    </button>
+                    <Link to={'/cart'} className="cursor-pointer relative">
+                        <span className="min-w-[25px] absolute -top-3 -right-5 text-white-800 bg-zest-500 rounded-full text-sm flex justify-center items-center">1</span>
+                        <ShoppingCart width={"25px"} height={"20px"} />
+                    </Link>
                 </div>
             </section>
         </div>
