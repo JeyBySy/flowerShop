@@ -1,6 +1,7 @@
 import React from 'react'
-import Card from '../Global/Card'
-import SampleImage from '../../assets/flowers/sample.png'
+// import Card from '../Global/Card'
+// import SampleImage from '../../assets/flowers/sample.png'
+import CardSkeleton from '../Global/Skeleton/CardSkeleton'
 
 interface Category {
     category?: string
@@ -25,7 +26,8 @@ const SearchByCategory: React.FC<Category> = ({ category = "None" }) => {
                 </select>
             </div>
             <div className={cardStyle}>
-                <Card itemName={"sample"} rating={5} price={100} imageUrl={SampleImage} totalSell={4} discount={0} />
+                <CardSkeleton cards={4} />
+                {/* <Card itemName={"sample"} rating={5} price={100} imageUrl={SampleImage} totalSell={4} discount={0} /> */}
 
             </div>
         </div>

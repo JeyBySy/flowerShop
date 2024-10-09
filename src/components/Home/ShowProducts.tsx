@@ -1,5 +1,7 @@
 import Card from "../Global/Card"
 import SampleImage from '../../assets/flowers/sample.png'
+import CardSkeleton from "../Global/Skeleton/CardSkeleton";
+
 
 const ShowProducts = () => {
     const products = [
@@ -77,6 +79,9 @@ const ShowProducts = () => {
             discount: 10
         }
     ];
+
+
+
     const cardStyle = "grid grid-cols-2 gap-2 xs:gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
     return (
         <>
@@ -87,7 +92,9 @@ const ShowProducts = () => {
                     <div className="w-full text-end text-sm">
                         <button onClick={() => alert("ads")} className="text-zest-600">Show More</button>
                     </div>
+
                     <div className={cardStyle}>
+                        {/* <CardSkeleton cards={4} /> */}
                         {products.map((product, key) => (
                             <Card
                                 key={key}
@@ -111,7 +118,8 @@ const ShowProducts = () => {
                         <button onClick={() => alert("ads")} className="text-zest-600">Show More</button>
                     </div>
                     <div className={cardStyle}>
-                        {products.map((product, key) => (
+                        <CardSkeleton cards={4} />
+                        {/* {products.map((product, key) => (
                             <Card
                                 key={key}
                                 itemName={product.itemName}
@@ -121,7 +129,7 @@ const ShowProducts = () => {
                                 totalSell={product.totalSell}
                                 discount={product.discount}
                             />
-                        ))}
+                        ))} */}
                     </div>
                 </div>
             </section>
@@ -134,7 +142,8 @@ const ShowProducts = () => {
                         <button onClick={() => alert("ads")} className="text-zest-600">Show More</button>
                     </div>
                     <div className={cardStyle}>
-                        {products.map((product, key) => (
+                        <CardSkeleton cards={4} />
+                        {/* {products.map((product, key) => (
                             <Card
                                 key={key}
                                 itemName={product.itemName}
@@ -144,7 +153,7 @@ const ShowProducts = () => {
                                 totalSell={product.totalSell}
                                 discount={product.discount}
                             />
-                        ))}
+                        ))} */}
                     </div>
                 </div>
             </section>

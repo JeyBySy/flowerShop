@@ -1,9 +1,14 @@
+import { motion } from 'framer-motion'
 import React from 'react'
 
 const TrackOrder: React.FC = () => {
     return (
         <section>
-            <div className="min-h-[60vh] items-center flex justify-center mt-5">
+            <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="min-h-[60vh] items-center flex justify-center mt-5">
                 <div className="w-full lg:max-w-md ">
                     <div className="bg-white p-5 rounded shadow ">
                         <form action="" className='flex flex-col gap-2'>
@@ -16,8 +21,8 @@ const TrackOrder: React.FC = () => {
                         </form>
                     </div>
                 </div>
-            </div>
-        </section>
+            </motion.div>
+        </section >
     )
 }
 

@@ -1,9 +1,14 @@
 import ShopHeader from '../Global/ShopHeader';
 import LoginForm from './LoginForm';
+import { motion } from 'framer-motion'
 
 const Login: React.FC = () => {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-brilliant-rose-100">
+        <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-screen flex items-center justify-center bg-brilliant-rose-100">
             <div className="w-full max-w-md">
                 <div className="flex w-full mb-5 justify-center">
                     <a href="/" className="flex items-center text-xl">
@@ -14,7 +19,7 @@ const Login: React.FC = () => {
                     <LoginForm />
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

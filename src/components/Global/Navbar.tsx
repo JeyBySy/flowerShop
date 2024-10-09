@@ -43,7 +43,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="container mx-auto h-[60px] flex items-center justify-between lg:px-0 px-4">
-                <Link to="/" className="flex items-center">
+                <Link to="/" className="flex items-center" preventScrollReset={true}>
                     <ShopHeader />
                 </Link>
                 <div className="w-2/4 lg:w-[20%] flex px-2">
