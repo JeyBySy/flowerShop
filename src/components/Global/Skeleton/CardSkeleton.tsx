@@ -7,7 +7,7 @@ type CardSkeletonProps = {
 
 const CardSkeleton = ({ cards }: CardSkeletonProps) => {
     return (
-        Array(cards).fill(0).map((item, i) => (
+        Array(cards).fill(0).map((_item, i) => (
             <div key={i} className="border relative p-4 rounded hover:shadow-2xl transition-shadow duration-300 w-full" >
                 <div className='flex items-center justify-center mb-3'>
                     <Skeleton style={{ width: "220px", height: "275px" }} />
