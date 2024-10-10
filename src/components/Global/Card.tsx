@@ -15,7 +15,6 @@ const Card: React.FC<CardProps> = ({ itemName, rating, price, imageUrl, totalSel
 
     return (
         <>
-
             <Link to={`/product/${itemNameConvert}`} key={keyItem} >
                 <div className="border relative p-4 rounded hover:shadow-2xl transition-shadow duration-300 w-full">
                     {discount !== 0 && (
@@ -29,7 +28,7 @@ const Card: React.FC<CardProps> = ({ itemName, rating, price, imageUrl, totalSel
                             {itemName}
                         </h2>
                         <div className="pt-2 flex text-xs sm:text-sm justify-between">
-                            <p className="text-gray-700 font-medium">${price.toFixed(2)}</p>
+                            <p className="text-persian-rose-500 font-medium">₱{price.toFixed(2)}</p>
                             <div className="flex items-center space-x-2">
                                 <span className="text-yellow-500">⭐ {rating}</span><span>({totalSell})</span>
                             </div>
@@ -37,7 +36,6 @@ const Card: React.FC<CardProps> = ({ itemName, rating, price, imageUrl, totalSel
                     </div>
                 </div>
             </Link>
-
         </>
     );
 };

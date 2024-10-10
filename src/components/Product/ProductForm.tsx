@@ -3,7 +3,7 @@ import Variety from './Variety';
 import Inclusions from './Inclusions';
 import SelectDate from './SelectDate';
 import Quantity from './Quantity';
-import Recommendation from './Recommendation';
+// import Recommendation from './Recommendation';
 import SummaryTotal from './SummaryTotal';
 
 interface ProductProps {
@@ -18,7 +18,7 @@ interface ProductProps {
 
 const ProductForm: React.FC<ProductProps> = ({ data }) => {
     return (
-        <form className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded">
+        <form className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded ">
             <div className="flex flex-col md:flex-row border-b-2 border-slate-200">
                 <h1 className="w-full text-2xl capitalize font-medium">{data.name}</h1>
                 <div className="w-full flex gap-2 mt-2 md:mt-0">
@@ -40,7 +40,7 @@ const ProductForm: React.FC<ProductProps> = ({ data }) => {
             <Inclusions />
             <SelectDate />
             <Quantity />
-            <Recommendation />
+            {/* <Recommendation /> */}
             <SummaryTotal />
 
             <div className="hidden lg:flex gap-1 justify-end">

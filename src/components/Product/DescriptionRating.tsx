@@ -26,6 +26,63 @@ const DescriptionRating: React.FC = () => {
                         <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
                     </div>
                 </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-t-2 px-2'>
+                    <div className='p-2 text-sm flex flex-col'>
+                        <div className='user-rating'>⭐⭐⭐⭐⭐5</div>
+                        <div className='user-description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, itaque. Officiis a dolorem rem, aperiam veritatis ratione in! Impedit natus totam harum earum sit sequi deleniti id aut! Facilis, suscipit.</div>
+                        <div className='user-name text-xs text-gray-500'>--- Anonymous</div>
+                        lasttttttttttttttttttttt
+                    </div>
+                </div>
             </div>
         </div>
     )
