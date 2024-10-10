@@ -25,8 +25,6 @@ const Cart: React.FC = () => {
                         Delete
                     </div>
                 </div>
-
-
                 <div className='flex w-full lg:absolute bottom-0 border-t-2 p-5 items-center justify-center gap-2 bg-white'>
                     <div className='flex gap-2'>
                         <input type="checkbox" name="" id="selectAllId" />

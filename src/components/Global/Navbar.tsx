@@ -63,7 +63,7 @@ const Navbar = () => {
             {/* Mobile Menu */}
             <section className={`px-5 lg:flex lg:justify-between lg:items-center ${isMobileMenuOpen ? 'block' : 'hidden'} lg:block`}>
                 <div className="flex-grow flex justify-end gap-6 relative w-full capitalize text-sm">
-                    <div className="relative cursor-pointer" onClick={toggleOccasionsMenu} onMouseLeave={() => setIsHoveredOccasions(false)}>
+                    <div className="relative cursor-pointer z-10" onClick={toggleOccasionsMenu} onMouseLeave={() => setIsHoveredOccasions(false)}>
                         Occasions
                         {isHoveredOccasions && (
                             <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
@@ -79,7 +79,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    <div className="relative cursor-pointer" onClick={toggleFlowersMenu} onMouseLeave={() => setIsHoveredFlowers(false)}>
+                    <div className="relative cursor-pointer z-10" onClick={toggleFlowersMenu} onMouseLeave={() => setIsHoveredFlowers(false)}>
                         Flowers & plants
                         {isHoveredFlowers && (
                             <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
@@ -95,7 +95,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    <div className="relative cursor-pointer" onClick={toggleTreatsMenu} onMouseLeave={() => setIsHoveredTreats(false)}>
+                    <div className="relative cursor-pointer z-10" onClick={toggleTreatsMenu} onMouseLeave={() => setIsHoveredTreats(false)}>
                         Sweet & Treats
                         {isHoveredTreats && (
                             <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
@@ -111,24 +111,22 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    {giftsMenuItems.length > 0 && (
-                        <div className="relative cursor-pointer" onClick={toggleGiftsMenu} onMouseLeave={() => setIsHoveredGifts(false)}>
-                            Gifts
-                            {isHoveredGifts && (
-                                <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
-                                    <ul className={`submenu ${giftsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
-                                        {giftsMenuItems.map((item) => (
-                                            <Link to={`/search/gifts/${item.toLowerCase()}`} key={item}>
-                                                <li className="submenu-items">
-                                                    {item}
-                                                </li>
-                                            </Link>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
-                    )}
+                    <div className="relative cursor-pointer z-10" onClick={toggleGiftsMenu} onMouseLeave={() => setIsHoveredGifts(false)}>
+                        Gifts
+                        {isHoveredGifts && (
+                            <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
+                                <ul className={`submenu ${giftsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
+                                    {giftsMenuItems.map((item) => (
+                                        <Link to={`/search/gifts/${item.toLowerCase()}`} key={item}>
+                                            <li className="submenu-items">
+                                                {item}
+                                            </li>
+                                        </Link>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
                     <Link to={'/cart'} className="cursor-pointer relative">
                         <span className="min-w-[25px] absolute -top-3 -right-5 text-white-800 bg-zest-500 rounded-full text-sm flex justify-center items-center">1</span>
                         <ShoppingCart width={"25px"} height={"20px"} />

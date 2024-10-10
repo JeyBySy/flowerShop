@@ -1,0 +1,7 @@
+.checkout input[type="text"],
+.checkout select {
+  @apply outline-none border-zest-500 w-full p-2 border-b-2;
+}
+.checkout textarea {
+  @apply border outline-none text-sm w-full p-2 border-b-2;
+}
