@@ -11,7 +11,7 @@ const Footer = () => {
                     <div className="lg:w-[10%] flex-grow items-center text-justify leading-loose">
                         <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio necessitatibus repudiandae tempora rerum autem est et qui id suscipit velit ratione possimus, itaque aliquid animi, quibusdam nesciunt? Ea doloremque ipsam, nisi, tempore laborum laudantium nam ab molestiae perferendis iusto dolores eum minima blanditiis cumque aperiam quisquam rem? Consequuntur nesciunt ipsam itaque accusamus atque, eum non iure, quod cupiditate fugit dolorem exercitationem voluptates aut odio voluptatum mollitia ex vel sed optio? Iure fugit aperiam voluptas ex. Nobis, repudiandae quos culpa iusto nisi cupiditate, voluptates totam quia eum dignissimos cum et a minus quod? Laudantium facere maxime sequi eaque quod accusamus nobis. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore libero et fuga deserunt tenetur pariatur, vero officia, neque itaque facilis necessitatibus minima id. Provident blanditiis totam asperiores voluptatibus ut quae!</span>
                     </div>
-                    <div className="flex-grow-0 items-center">
+                    {/* <div className="flex-grow-0 items-center">
                         <span className="text-xl font-semibold uppercase ">
                             SiteLink
                         </span>
@@ -23,7 +23,7 @@ const Footer = () => {
                             <a href="">Home</a>
                             <a href="">Home</a>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex-grow-0 items-center ">
                         <span className="text-xl font-semibold uppercase">
                             CUSTOMER CARE
@@ -56,7 +56,7 @@ const Footer = () => {
                         </span>
                         <div className="flex ">
                             <input type="text" className="w-full p-2 text-black focus:outline-none" placeholder="sample@gmail.com " />
-                            <button className="bg-zest-600 p-1">Subscribe</button>
+                            <button className="bg-zest-600 py-1 px-2">Subscribe</button>
                         </div>
                         <div className="flex justify-evenly items-center mt-5">
                             <div className="text-center w-full border">
