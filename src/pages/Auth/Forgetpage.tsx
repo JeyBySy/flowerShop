@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import ShopHeader from '../Global/ShopHeader';
+import ShopHeader from '../../components/Global/ShopHeader';
 
-
-const Forgetpassword: React.FC = () => {
+const Forgetpage: React.FC = () => {
     const [email, setEmail] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -42,6 +41,6 @@ const Forgetpassword: React.FC = () => {
 
 
     )
-}
+};
 
-export default Forgetpassword
+export default Forgetpage;

@@ -1,8 +1,9 @@
-import RegisterForm from './RegisterForm';
-import ShopHeader from '../Global/ShopHeader';
-import { motion } from 'framer-motion'
 
-const Register: React.FC = () => {
+import ShopHeader from '../../components/Global/ShopHeader';
+import { motion } from 'framer-motion'
+import RegisterForm from './RegisterForm';
+
+const RegisterPage: React.FC = () => {
     return (
         <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -40,4 +41,4 @@ const Register: React.FC = () => {
     );
 };
 
-export default Register;
+export default RegisterPage;

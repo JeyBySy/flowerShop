@@ -16,13 +16,13 @@ const Card: React.FC<CardProps> = ({ itemName, rating, price, imageUrl, totalSel
     return (
         <>
             <Link to={`/product/${itemNameConvert}`} key={keyItem} >
-                <div className="border relative p-4 rounded hover:shadow-2xl transition-shadow duration-300 w-full">
+                <div className="border relative p-4 rounded hover:shadow-md transition-shadow duration-300 w-full">
                     {discount !== 0 && (
                         <span className="absolute right-1 bg-persian-rose-500 top-0 rounded-b-full p-2 text-white text-xs flex items-center justify-center">
                             {discount}%
                         </span>
                     )}
-                    <img src={imageUrl} alt={itemName} className="w-full h-full object-cover rounded-t-lg sm:h-full md:h-full" />
+                    <img src={imageUrl} alt={itemName} className="w-full h-[10rem] object-contain" />
                     <div className="pt-5">
                         <h2 className="text-sm sm:text-base text-ellipsis overflow-hidden whitespace-nowrap w-full">
                             {itemName}

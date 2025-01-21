@@ -1,8 +1,7 @@
 import React from 'react'
-import SampleImage from '../../assets/flowers/sample.png'
-import './index.css'
+import SampleImage from '../assets/flowers/sample.png'
 
-const Checkout: React.FC = () => {
+const Checkoutpage: React.FC = () => {
     return (
         <section className='checkout'>
             <div className='flex flex-row flex-wrap lg:flex-nowrap  justify-evenly gap-2'>
@@ -151,4 +150,4 @@ const Checkout: React.FC = () => {
     )
 }
 
-export default Checkout
+export default Checkoutpage

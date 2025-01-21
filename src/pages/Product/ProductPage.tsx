@@ -1,12 +1,9 @@
-import React from 'react'
-import ImageCarousel from './ImageCarousel';
-import DescriptionRating from './DescriptionRating';
-import ProductForm from './ProductForm';
+import DescriptionRating from "../../components/Product/DescriptionRating"
+import ImageCarousel from "../../components/Product/ImageCarousel"
+import ProductForm from "./ProductForm"
 import { useParams } from 'react-router-dom';
 
-
-
-const Product: React.FC = () => {
+const ProductPage: React.FC = () => {
     const { item } = useParams<{ item: string }>();
 
     const dataProduct = {
@@ -16,7 +13,6 @@ const Product: React.FC = () => {
         description: 'This is a placeholder description for the product.',
         // Add other fields if needed
     };
-
     return (
         <section className="flex mb-20 lg:mb-0 flex-col gap-5 overflow-hidden">
             <div className=" grid-cols-1 lg:grid-cols-2 gap-4 hidden lg:grid">
@@ -35,7 +31,7 @@ const Product: React.FC = () => {
                 <DescriptionRating />
             </div>
         </section>
-    );
-};
+    )
+}
 
-export default Product;
+export default ProductPage

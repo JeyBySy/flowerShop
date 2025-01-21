@@ -1,10 +1,10 @@
 import React from 'react'
-import Variety from './Variety';
-import Inclusions from './Inclusions';
-import SelectDate from './SelectDate';
-import Quantity from './Quantity';
+import Variety from '../../components/Product/Variety';
+import Inclusions from '../../components/Product/Inclusions';
+import SelectDate from '../../components/Product/SelectDate';
+import Quantity from '../../components/Product/Quantity';
 // import Recommendation from './Recommendation';
-import SummaryTotal from './SummaryTotal';
+import SummaryTotal from '../../components/Product/SummaryTotal';
 
 interface ProductProps {
     data: {

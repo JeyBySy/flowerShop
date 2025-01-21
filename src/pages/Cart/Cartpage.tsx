@@ -1,8 +1,9 @@
 import React from 'react'
-import SampleImage from '../../assets/flowers/sample.png'
+import SampleImage from '../..//assets/flowers/sample.png'
 import { Link } from 'react-router-dom'
+import './cart.css'
 
-const Cart: React.FC = () => {
+const Cartpage: React.FC = () => {
     return (
         <section className='bg-white mt-5 lg:w-[60%] md:w-full w-full p-5 rounded shadow'>
             <div className='flex flex-col gap-2 min-h-[60vh]  relative'>
@@ -56,4 +57,4 @@ const Cart: React.FC = () => {
     )
 }
 
-export default Cart
+export default Cartpage

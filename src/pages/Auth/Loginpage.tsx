@@ -1,8 +1,8 @@
-import ShopHeader from '../Global/ShopHeader';
-import LoginForm from './LoginForm';
 import { motion } from 'framer-motion'
+import ShopHeader from '../../components/Global/ShopHeader';
+import LoginForm from './LoginForm';
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
     return (
         <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -20,7 +20,7 @@ const Login: React.FC = () => {
                 </div>
             </div>
         </motion.div>
-    );
+    )
 };
 
-export default Login;
+export default LoginPage;

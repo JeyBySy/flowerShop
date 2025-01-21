@@ -1,8 +1,10 @@
 import { useParams } from 'react-router-dom';
 import SearchByCategory from '../components/Search/SearchByCategory';
 
+type SearchParams = { occasion: string, flower: string, treat: string, gift: string }
+
 const Searchpage: React.FC = () => {
-    const { occasion, flower, treat, gift } = useParams<{ occasion: string, flower: string, treat: string, gift: string }>();
+    const { occasion, flower, treat, gift } = useParams<SearchParams>();
 
     // Based on the route, you can fetch data or display information
     const searchCategory = occasion || flower || treat || gift;
