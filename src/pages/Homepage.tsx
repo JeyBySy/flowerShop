@@ -1,89 +1,20 @@
+import React from 'react';
 import Divider from "../components/Global/Divider"
 import Card from "../components/Global/Card"
 import SampleImage from '../assets/flowers/sample.png'
 import CardSkeleton from "../components/Global/Skeleton/CardSkeleton";
+import { useProducts } from '../hooks/useProducts';
+
 
 const Homepage: React.FC = () => {
-    const products = [
-        {
-            id: 1,
-            itemName: "Flower dahlia",
-            rating: 4.5,
-            price: 99.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 0
+    const { products, loading, error } = useProducts()
 
-        },
-        {
-            id: 2,
-            itemName: "Flower sample",
-            rating: 4.7,
-            price: 599.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 10
-        },
-        {
-            id: 3,
-            itemName: "Flower sample",
-            rating: 4.9,
-            price: 1199.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 10
-        },
-        {
-            id: 4,
-            itemName: "Flower sample",
-            rating: 4.3,
-            price: 199.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 10
-        },
-        {
-            id: 5,
-            itemName: "Flower sample",
-            rating: 4.3,
-            price: 199.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 10
-        },
-        {
-            id: 6,
-            itemName: "Flower sample",
-            rating: 4.3,
-            price: 199.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 10
-        },
-        {
-            id: 7,
-            itemName: "Flower sample",
-            rating: 4.3,
-            price: 199.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 10
-        },
-        {
-            id: 8,
-            itemName: "Flower sample",
-            rating: 4.3,
-            price: 199.99,
-            imageUrl: SampleImage,
-            totalSell: 10,
-            discount: 10
-        }
-    ];
     const cardStyle = "grid grid-cols-2 gap-2 xs:gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+
     return (
         <div className="min-h-screen">
             <section>
-                <div className="flexflex-wrap bg-gray-300 min-h-[260px] text-center items-center justify-center gap-4 lg:grid lg:gap-2 lg:grid-cols-8 xl:grid-cols-11">
+                <div className="flex flex-wrap bg-gray-300 min-h-[260px] text-center items-center justify-center gap-4 lg:grid lg:gap-2 lg:grid-cols-8 xl:grid-cols-11">
                     <img
                         src={""}
                         alt="Promotion Banner 1"
@@ -104,7 +35,6 @@ const Homepage: React.FC = () => {
                         alt="Promotion Banner 4"
                         className="w-full border h-auto max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
                     />
-
                 </div>
             </section>
             <Divider />
@@ -118,18 +48,24 @@ const Homepage: React.FC = () => {
                     </div>
 
                     <div className={cardStyle}>
-                        {/* <CardSkeleton cards={4} /> */}
-                        {products.map((product, key) => (
-                            <Card
-                                key={key}
-                                itemName={product.itemName}
-                                rating={product.rating}
-                                price={product.price}
-                                imageUrl={product.imageUrl}
-                                totalSell={product.totalSell}
-                                discount={product.discount}
-                            />
-                        ))}
+                        {loading ? (
+                            <CardSkeleton cards={4} />  // Show skeletons while loading
+                        ) : error ? (
+                            <div>Error loading categories</div>
+                        ) : (
+                            products.map((product, key) => (
+                                <Card
+                                    key={key}
+                                    id={product.id}
+                                    itemName={product.name}
+                                    rating={product.averageRating}
+                                    price={product.price}
+                                    imageUrl={SampleImage}
+                                    totalSell={product.totalSell}
+                                    discount={product.discount}
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
             </section>
@@ -142,18 +78,11 @@ const Homepage: React.FC = () => {
                         <button onClick={() => alert("ads")} className="text-zest-600">Show More</button>
                     </div>
                     <div className={cardStyle}>
-                        <CardSkeleton cards={4} />
-                        {/* {products.map((product, key) => (
-                            <Card
-                                key={key}
-                                itemName={product.itemName}
-                                rating={product.rating}
-                                price={product.price}
-                                imageUrl={product.imageUrl}
-                                totalSell={product.totalSell}
-                                discount={product.discount}
-                            />
-                        ))} */}
+                        {loading ? (
+                            <CardSkeleton cards={4} />  // Show skeletons while loading
+                        ) : (
+                            <CardSkeleton cards={4} />
+                        )}
                     </div>
                 </div>
             </section>
@@ -166,24 +95,17 @@ const Homepage: React.FC = () => {
                         <button onClick={() => alert("ads")} className="text-zest-600">Show More</button>
                     </div>
                     <div className={cardStyle}>
-                        <CardSkeleton cards={4} />
-                        {/* {products.map((product, key) => (
-                            <Card
-                                key={key}
-                                itemName={product.itemName}
-                                rating={product.rating}
-                                price={product.price}
-                                imageUrl={product.imageUrl}
-                                totalSell={product.totalSell}
-                                discount={product.discount}
-                            />
-                        ))} */}
+                        {loading ? (
+                            <CardSkeleton cards={4} />  // Show skeletons while loading
+                        ) : (
+                            <CardSkeleton cards={4} />
+                        )}
                     </div>
                 </div>
             </section>
 
         </div>
-    )
+    );
 }
 
 

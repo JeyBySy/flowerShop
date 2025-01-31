@@ -21,15 +21,12 @@ const App: React.FC = () => {
         <Route index element={<Homepage />} />
         <Route path="/track-order" element={<TrackOrderpage />} />
         <Route path="/search" element={<Searchpage />} />
-        <Route path="/search/occasions/:occasion" element={<Searchpage />} />
-        <Route path="/search/flowers/:flower" element={<Searchpage />} />
-        <Route path="/search/treats/:treat" element={<Searchpage />} />
-        <Route path="/search/gifts/:gift" element={<Searchpage />} />
+        <Route path="/search/:category/:subCategory" element={<Searchpage />} />
 
         <Route path="/cart" element={<Cartpage />} />
         <Route path="/checkout" element={<Checkoutpage />} />
 
-        <Route path="/product/:item" element={<ProductPage />} />
+        <Route path="/product/:id/:item" element={<ProductPage />} />
 
 
         <Route path="/page-not-found" element={<ErrorPage />} />

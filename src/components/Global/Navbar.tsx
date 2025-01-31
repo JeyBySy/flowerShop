@@ -2,23 +2,14 @@ import { Search, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 import ShopHeader from "./ShopHeader";
+import MenuSkeleton from "./Skeleton/MenuSkeleton";
+import { useCategories } from '../../hooks/useCategories';
 
 const Navbar = () => {
-    const [isHoveredOccasions, setIsHoveredOccasions] = useState<boolean>(false);
-    const [isHoveredFlowers, setIsHoveredFlowers] = useState<boolean>(false);
-    const [isHoveredTreats, setIsHoveredTreats] = useState<boolean>(false);
-    const [isHoveredGifts, setIsHoveredGifts] = useState<boolean>(false);
+    const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false); // State for mobile menu
 
-    const occasionsMenuItems = ["Birthday", "Christmas", "Anniversary", "Romance"];
-    const flowersMenuItems = ["Roses", "Tulips", "Sunflowers", "Lilies"];
-    const treatsMenuItems = ["Chocolate", "Cookies", "Cakes"];
-    const giftsMenuItems = ["Toys", "Jewelry", "Electronics"];
-
-    const toggleOccasionsMenu = () => setIsHoveredOccasions(prev => !prev);
-    const toggleFlowersMenu = () => setIsHoveredFlowers(prev => !prev);
-    const toggleTreatsMenu = () => setIsHoveredTreats(prev => !prev);
-    const toggleGiftsMenu = () => setIsHoveredGifts(prev => !prev);
+    const { categories, loading, error } = useCategories();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -62,77 +53,47 @@ const Navbar = () => {
             {/* Mobile Menu */}
             <section className={`px-5 lg:flex lg:justify-between lg:items-center ${isMobileMenuOpen ? 'block' : 'hidden'} lg:block`}>
                 <div className="flex-grow flex justify-end gap-6 relative w-full capitalize text-sm">
-                    <div className="relative cursor-pointer z-10" onClick={toggleOccasionsMenu} onMouseLeave={() => setIsHoveredOccasions(false)}>
-                        Occasions
-                        {isHoveredOccasions && (
-                            <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
-                                <ul className={`submenu ${occasionsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"}`}>
-                                    {occasionsMenuItems.map((item) => (
-                                        <Link to={`/search/occasions/${item.toLowerCase()}`} key={item}>
-                                            <li className="submenu-items">
-                                                {item}
-                                            </li>
-                                        </Link>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                    <div className="relative cursor-pointer z-10" onClick={toggleFlowersMenu} onMouseLeave={() => setIsHoveredFlowers(false)}>
-                        Flowers & plants
-                        {isHoveredFlowers && (
-                            <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
-                                <ul className={`submenu ${flowersMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
-                                    {flowersMenuItems.map((item) => (
-                                        <Link to={`/search/flowers/${item.toLowerCase()}`} key={item}>
-                                            <li className="submenu-items">
-                                                {item}
-                                            </li>
-                                        </Link>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                    <div className="relative cursor-pointer z-10" onClick={toggleTreatsMenu} onMouseLeave={() => setIsHoveredTreats(false)}>
-                        Sweet & Treats
-                        {isHoveredTreats && (
-                            <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
-                                <ul className={`submenu ${treatsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
-                                    {treatsMenuItems.map((item) => (
-                                        <Link to={`/search/treats/${item.toLowerCase()}`} key={item}>
-                                            <li className="submenu-items">
-                                                {item}
-                                            </li>
-                                        </Link>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                    <div className="relative cursor-pointer z-10" onClick={toggleGiftsMenu} onMouseLeave={() => setIsHoveredGifts(false)}>
-                        Gifts
-                        {isHoveredGifts && (
-                            <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
-                                <ul className={`submenu ${giftsMenuItems.length === 1 ? "max-w-[150px]" : "max-w-[300px]"} `}>
-                                    {giftsMenuItems.map((item) => (
-                                        <Link to={`/search/gifts/${item.toLowerCase()}`} key={item}>
-                                            <li className="submenu-items">
-                                                {item}
-                                            </li>
-                                        </Link>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
+                    {loading ? (
+                        <>
+                            <MenuSkeleton />
+                        </>
+                    ) : error ? (
+                        <div>Error loading categories</div>
+                    ) : (
+                        <>
+                            {categories?.length > 0 ? (
+                                categories?.map((item) => (
+                                    <div key={item.id} className="relative cursor-pointer z-10"
+                                        onMouseEnter={() => setHoveredItemId(item.id)}
+                                        onMouseLeave={() => setHoveredItemId(null)}
+                                    >
+                                        {item.name}
+
+                                        {hoveredItemId === item.id && (
+                                            <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
+                                                <ul className={`submenu ${item.SubCategories.length === 1 ? "max-w-[150px]" : "max-w-[300px]"}`}>
+                                                    {item.SubCategories.map((sub) => (
+                                                        <Link to={`/search/${item.name.toLowerCase().trim().replace(/\s+/g, '-')}/${sub.name.toLowerCase()}`} key={sub.id}>
+                                                            <li className="submenu-items">{sub.name}</li>
+                                                        </Link>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No categories found.</p>
+                            )}
+                        </>
+                    )}
                     <Link to={'/cart'} className="cursor-pointer relative">
                         <span className="min-w-[25px] absolute -top-3 -right-5 text-white-800 bg-zest-500 rounded-full text-sm flex justify-center items-center">1</span>
                         <ShoppingCart width={"25px"} height={"20px"} />
                     </Link>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }
 
