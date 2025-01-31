@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
-import SelectDate from '../../components/Product/SelectDate';
-import SummaryTotal from '../../components/Product/SummaryTotal';
 import SampleImage from '../../assets/flowers/sample.png'
 
 interface ProductRating {
     id: string;
     rating: number;
     review: string;
-    userId: string;
-    productId: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -20,8 +16,6 @@ interface ProductProps {
         name: string;
         price: string;
         stock: number;
-        categoryId: string;
-        subCategoryId: string;
         variety: string[];
         ProductRatings: ProductRating[];
         averageRating: string
@@ -56,7 +50,7 @@ const ProductForm: React.FC<ProductProps> = ({ data }) => {
     const valueCategory: string = "w-full text-sm text-end text-persian-rose-500"
 
     return (
-        <form className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded ">
+        <form className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded" data-id={id}>
             <div className="flex flex-col md:flex-row border-b-2 border-slate-200">
                 <h1 className="w-[80%] text-2xl capitalize font-medium">{name}</h1>
                 <div className="w-[20%] flex gap-2 mt-2 md:mt-0">

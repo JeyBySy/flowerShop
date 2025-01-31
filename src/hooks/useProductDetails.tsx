@@ -22,13 +22,13 @@ interface ProductType {
     description: string;
     createdAt: string;
     updatedAt: string;
-    price: number;
+    price: string;
     stock: number;
-    categoryid: string;
-    subCategoryId: string;
-    variety: object[];
+    // categoryid: string;
+    // subCategoryId: string;
+    variety: string[];
     ProductRatings: ProductRatingsType[];
-    averageRating: number
+    averageRating: string
 
 }
 

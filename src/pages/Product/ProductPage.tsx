@@ -29,10 +29,10 @@ const ProductPage: React.FC = () => {
                     <DescriptionRating
                         description={product?.description || null}
                         productRatings={product?.ProductRatings || []}
-                        averageRating={product?.averageRating ?? 0}
+                        averageRating={parseFloat(product?.averageRating ?? '0')}
                     />
                 </div>
-                <ProductForm data={product} />
+                {product && <ProductForm data={product} />}
             </div>
             {/* Mobile sequence components */}
             <div className="lg:hidden sm:flex flex-col">
@@ -43,7 +43,7 @@ const ProductPage: React.FC = () => {
                 <DescriptionRating
                     description={product?.description || null}
                     productRatings={product?.ProductRatings || []}
-                    averageRating={product?.averageRating ?? 0}
+                    averageRating={parseFloat(product?.averageRating ?? '0')}
                 />
             </div>
         </section>
