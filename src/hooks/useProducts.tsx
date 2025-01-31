@@ -1,32 +1,33 @@
 import { useState, useEffect } from 'react';
 import { fetchProducts } from '../services/apiService';
+import { ProductType } from "../types/productTypes"
 
-type ProductRatingsType = {
-    id: string;
-    rating: number;
-    review: string;
-    userId: string;
-    productId: string;
-    createdAt: string;
-    updatedAt: string;
-};
+// type ProductRatingsType = {
+//     id: string;
+//     rating: number;
+//     review: string;
+//     userId: string;
+//     productId: string;
+//     createdAt: string;
+//     updatedAt: string;
+// };
 
 
-type ProductType = {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    price: number;
-    stock: number;
-    categoryid: string;
-    subCategoryId: string;
-    variety: object[];
-    ProductRatings: ProductRatingsType[],
-    averageRating: number
+// type ProductType = {
+//     id: string;
+//     name: string;
+//     description: string;
+//     createdAt: string;
+//     updatedAt: string;
+//     price: number;
+//     stock: number;
+//     categoryid: string;
+//     subCategoryId: string;
+//     variety: object[];
+//     ProductRatings: ProductRatingsType[],
+//     averageRating: number
 
-}
+// }
 
 export const useProducts = () => {
     const [products, setProducts] = useState<ProductType[]>([]);

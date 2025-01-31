@@ -1,26 +1,6 @@
 import React, { useState } from 'react'
 import SampleImage from '../../assets/flowers/sample.png'
-
-interface ProductRating {
-    id: string;
-    rating: number;
-    review: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-
-interface ProductProps {
-    data: {
-        id: string;
-        name: string;
-        price: string;
-        stock: number;
-        variety: string[];
-        ProductRatings: ProductRating[];
-        averageRating: string
-    }
-}
+import { ProductProps } from '../../types/productTypes'
 
 const ProductForm: React.FC<ProductProps> = ({ data }) => {
     const { id, name, price, stock, variety, averageRating, ProductRatings } = data;

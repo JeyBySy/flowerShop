@@ -1,36 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchProductDetails } from '../services/apiService';
+import { ProductType } from "../types/productTypes"
 
-type ProductRatingsType = {
-    id: string;
-    rating: number;
-    review: string;
-    createdAt: string;
-    updatedAt: string;
-    User: {
-        name: string;
-    }
-    Product: {
-        name: string;
-    }
-};
-
-
-interface ProductType {
-    id: string;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    price: string;
-    stock: number;
-    // categoryid: string;
-    // subCategoryId: string;
-    variety: string[];
-    ProductRatings: ProductRatingsType[];
-    averageRating: string
-
-}
 
 export const useProductDetails = (productId: string) => {
     const [product, setProduct] = useState<ProductType | null>(null);

@@ -58,8 +58,8 @@ const Homepage: React.FC = () => {
                                     key={key}
                                     id={product.id}
                                     itemName={product.name}
-                                    rating={product.averageRating}
-                                    price={product.price}
+                                    rating={parseFloat(product.averageRating) || 0}
+                                    price={parseFloat(product.price)}
                                     imageUrl={SampleImage}
                                     totalSell={product.totalSell}
                                     discount={product.discount}

@@ -1,17 +1,8 @@
 import { Link } from "react-router-dom";
+import { CardProps } from "../../types/cardTypes"
 
-interface CardProps {
-    id: string;
-    itemName: string;
-    rating: number;
-    price: number;
-    imageUrl: string;
-    totalSell: number;
-    discount: number,
-    keyItem?: number
-}
 
-const Card: React.FC<CardProps> = ({ id, itemName, rating, price, imageUrl, totalSell, discount = 0, keyItem }: CardProps) => {
+const Card: React.FC<CardProps> = ({ id, itemName, rating, price, imageUrl, totalSell = 0, discount = 0, keyItem }: CardProps) => {
     const itemNameConvert: string = itemName.trim().toLowerCase().replace(/\s+/g, '-');
 
     return (
