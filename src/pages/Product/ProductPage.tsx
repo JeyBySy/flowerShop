@@ -43,7 +43,7 @@ const ProductPage: React.FC = () => {
                 <DescriptionRating
                     description={product?.description || null}
                     productRatings={product?.ProductRatings || []}
-                    averageRating={product?.averageRating}
+                    averageRating={product?.averageRating ?? 0}
                 />
             </div>
         </section>
