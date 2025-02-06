@@ -8,7 +8,8 @@ export interface ProductRating {
 
 export interface ProductRatingsType extends ProductRating {
   User: {
-    name: string
+    first_name: string,
+    last_name: string
   }
   Product: {
     name: string
@@ -23,6 +24,8 @@ export interface ProductType {
   updatedAt: string
   price: string
   stock: number
+  categoryId:string
+  subCategoryId:string
   variety: string[]
   ProductRatings: ProductRatingsType[]
   averageRating: string
@@ -31,5 +34,6 @@ export interface ProductType {
 }
 
 export interface ProductProps {
-  data: ProductType
+  data: ProductType,
+  addToCartEvent:()=>void
 }

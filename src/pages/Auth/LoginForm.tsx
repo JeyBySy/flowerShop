@@ -1,26 +1,46 @@
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './auth.css'
 import { User } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+
 
 const LoginForm: React.FC = () => {
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle login logic
+        setErrorMessage(''); // Clear previous errors
+        try {
+            await login(email, password);
+            navigate(from, { replace: true });
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (error) {
+            setErrorMessage('Invalid email or password. Please try again.');
+        }
     };
 
     return (
         <>
             <form onSubmit={handleSubmit} className="space-y-4">
+                {errorMessage && (
+                    <div className="text-red-600 text-sm mt-2 border text-center bg-red-200 p-4">{errorMessage}</div>
+                )}
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} className="mt-1 p-2 block w-full border border-gray-300 rounded-md" required />
+                    <input type="email" id="email" value={email} placeholder='Email' name='email' onChange={(e) => setEmail(e.target.value)} className="mt-1 p-2 block w-full border border-gray-300 rounded-md" required />
                 </div>
                 <div>
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 p-2 block w-full border border-gray-300 rounded-md" required />
+                    <input type="password" id="password" placeholder='Password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 p-2 block w-full border border-gray-300 rounded-md" required />
                 </div>
                 <div className='flex justify-evenly items-center'>
                     <div className='flex-grow w-full'>

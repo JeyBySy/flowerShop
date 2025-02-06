@@ -1,15 +1,25 @@
 import { Search, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import ShopHeader from "./ShopHeader";
 import MenuSkeleton from "./Skeleton/MenuSkeleton";
 import { useCategories } from '../../hooks/useCategories';
+import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { fromKebabCase, toKebabCase } from "../../utils/formatSpaceString";
 
 const Navbar = () => {
+    const { user } = useAuth();
     const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false); // State for mobile menu
-
+    const { cart } = useCart();
+    const [cartCount, setCartCount] = useState<number>(0)
     const { categories, loading, error } = useCategories();
+
+    useEffect(() => {
+        setCartCount(cart.length);
+
+    }, [cart]);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -26,7 +36,13 @@ const Navbar = () => {
                     <div className="flex-1 text-center text-sm">
                         <div className="flex items-center gap-5 justify-end">
                             <div className="cursor-pointer"><Link to="/track-order">Track Order</Link></div>
-                            <div className="cursor-pointer"><Link to="/login">Login</Link></div>
+                            {user ? (
+                                <div className="cursor-pointer">{user?.userData?.first_name} {user?.userData?.last_name}
+
+                                </div>
+                            ) : (
+                                <div className="cursor-pointer"><Link to="/login">Login</Link></div>
+                            )}
                             <div className="cursor-pointer"><Link to="/register">Register</Link></div>
                         </div>
                     </div>
@@ -67,13 +83,14 @@ const Navbar = () => {
                                         onMouseEnter={() => setHoveredItemId(item.id)}
                                         onMouseLeave={() => setHoveredItemId(null)}
                                     >
-                                        {item.name}
+                                        {fromKebabCase(item.name)}
+
 
                                         {hoveredItemId === item.id && (
                                             <div className="absolute top-full -left-20 min-h-fit bg-white border shadow-lg">
                                                 <ul className={`submenu ${item.SubCategories.length === 1 ? "max-w-[150px]" : "max-w-[300px]"}`}>
                                                     {item.SubCategories.map((sub) => (
-                                                        <Link to={`/search/${item.name.toLowerCase().trim().replace(/\s+/g, '-')}/${sub.name.toLowerCase()}`} key={sub.id}>
+                                                        <Link to={`/search/${toKebabCase(item.name)}/${toKebabCase(sub.name)}`} key={sub.id}>
                                                             <li className="submenu-items">{sub.name}</li>
                                                         </Link>
                                                     ))}
@@ -88,7 +105,11 @@ const Navbar = () => {
                         </>
                     )}
                     <Link to={'/cart'} className="cursor-pointer relative">
-                        <span className="min-w-[25px] absolute -top-3 -right-5 text-white-800 bg-zest-500 rounded-full text-sm flex justify-center items-center">1</span>
+                        {cartCount > 0 && (
+                            <span className="min-w-[25px] absolute -top-3 -right-5 text-white bg-zest-500 rounded-full text-sm flex justify-center items-center">
+                                {cartCount}
+                            </span>
+                        )}
                         <ShoppingCart width={"25px"} height={"20px"} />
                     </Link>
                 </div>

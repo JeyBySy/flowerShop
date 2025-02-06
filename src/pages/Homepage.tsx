@@ -51,7 +51,7 @@ const Homepage: React.FC = () => {
                         {loading ? (
                             <CardSkeleton cards={4} />  // Show skeletons while loading
                         ) : error ? (
-                            <div>Error loading categories</div>
+                            <div>{error}</div>
                         ) : (
                             products.map((product, key) => (
                                 <Card

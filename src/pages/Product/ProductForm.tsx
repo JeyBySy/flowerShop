@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import SampleImage from '../../assets/flowers/sample.png'
 import { ProductProps } from '../../types/productTypes'
 
-const ProductForm: React.FC<ProductProps> = ({ data }) => {
+const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
     const { id, name, price, stock, variety, averageRating, ProductRatings } = data;
 
     const [numberInputValue, setnumberInputValue] = useState(1)
@@ -117,7 +117,7 @@ const ProductForm: React.FC<ProductProps> = ({ data }) => {
             </div>
 
             <div className="hidden lg:flex gap-1 justify-end">
-                <button className="btn_styles-1 w-full" type="submit">Add to Cart</button>
+                <button className="btn_styles-1 w-full" onClick={addToCartEvent}>Add to Cart</button>
                 <button className="btn_styles-2 w-full">Buy Now</button>
             </div>
             <p className="text-sm italic">

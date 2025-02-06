@@ -7,7 +7,8 @@ interface DescriptionRatingProps {
         rating: number;
         review: string;
         User: {
-            name: string
+            first_name: string,
+            last_name: string
         }
         Product: {
             name: string
@@ -46,7 +47,7 @@ const DescriptionRating: React.FC<DescriptionRatingProps> = ({ description, prod
                                     ))}
                                     {rating.rating}</div>
                                 <div className='user-description text-gray-600'>{rating.review}</div>
-                                <div className='user-name text-xs text-gray-500'>--- {rating.User.name}</div>
+                                <div className='user-name text-xs text-gray-500'>--- {rating.User.first_name} {rating.User.last_name}</div>
                             </div>
                         </div>
                     ))}

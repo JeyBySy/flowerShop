@@ -1,12 +1,17 @@
 import DescriptionRating from "../../components/Product/DescriptionRating"
 import ImageCarousel from "../../components/Product/ImageCarousel"
+import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
 import { useProductDetails } from "../../hooks/useProductDetails";
 import ProductForm from "./ProductForm"
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const ProductPage: React.FC = () => {
     const { id } = useParams<{ id: string; }>();
+    const { user } = useAuth();
+    const { addToCart } = useCart();
+    const navigate = useNavigate();
 
     const { product, loading, error } = useProductDetails(id || "");
 
@@ -18,6 +23,16 @@ const ProductPage: React.FC = () => {
     if (error) {
         return <div>{error}</div>;
     }
+
+    const handleAddToCart = () => {
+        if (!user) {
+            // If not logged in, redirect to the login page
+            navigate('/login', { state: { from: window.location.pathname } });
+        } else if (product) {
+            // Ensure product is not null before adding to cart
+            addToCart(product);
+        }
+    };
 
 
     return (
@@ -32,13 +47,13 @@ const ProductPage: React.FC = () => {
                         averageRating={parseFloat(product?.averageRating ?? '0')}
                     />
                 </div>
-                {product && <ProductForm data={product} />}
+                {product && <ProductForm data={product} addToCartEvent={handleAddToCart} />}
             </div>
             {/* Mobile sequence components */}
             <div className="lg:hidden sm:flex flex-col">
                 <div className="flex flex-col gap-4">
                     <ImageCarousel />
-                    {/* <ProductForm data={product} /> */}
+                    {product && <ProductForm data={product} addToCartEvent={handleAddToCart} />}
                 </div>
                 <DescriptionRating
                     description={product?.description || null}

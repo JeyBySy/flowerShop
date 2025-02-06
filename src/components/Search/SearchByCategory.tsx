@@ -1,17 +1,31 @@
-import React from 'react'
-// import Card from '../Global/Card'
-// import SampleImage from '../../assets/flowers/sample.png'
+// import React, { useEffect, useState } from 'react'
+import Card from '../Global/Card'
+import SampleImage from '../../assets/flowers/sample.png'
 import CardSkeleton from '../Global/Skeleton/CardSkeleton'
 
-interface Category {
-    category?: string
+interface Product {
+    id: string;
+    name: string;
+    description: string;
+    price: string;
+    stock: number;
+    categoryId: string;
+    subCategoryId: string;
+    variety: string[];
+    createdAt: string;
+    updatedAt: string;
 }
 
-const SearchByCategory: React.FC<Category> = ({ category = "None" }) => {
+interface CategoryProps {
+    data: Product[];
+    loading: boolean
+}
+
+const SearchByCategory: React.FC<CategoryProps> = ({ data = [], loading }) => {
     const cardStyle = "grid grid-cols-2 gap-2 xs:gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+
     return (
         <div className='flex flex-col gap-5'>
-            Data: {category}
             <div className='flex gap-3 text-sm text-slate-800'>
                 <select name="sortSearch" className='px-2 py-4 rounded font-medium' defaultValue={1}>
                     <option value="1" className='capitalize'>A-Z</option>
@@ -26,12 +40,26 @@ const SearchByCategory: React.FC<Category> = ({ category = "None" }) => {
                 </select>
             </div>
             <div className={cardStyle}>
-                <CardSkeleton cards={4} />
-                {/* <Card itemName={"sample"} rating={5} price={100} imageUrl={SampleImage} totalSell={4} discount={0} /> */}
+                {loading ? (
+                    <CardSkeleton cards={4} />  // Show skeletons while loading
+                ) : (
+                    data.map((product, key) => (
+                        <Card
+                            key={key}
+                            id={product.id}
+                            itemName={product.name}
+                            // rating={parseFloat(product.averageRating) || 0}
+                            price={parseFloat(product.price)}
+                            imageUrl={SampleImage}
+                        // totalSell={product.totalSell}
+                        // discount={product.discount}
+                        />
+                    ))
+                )}
 
             </div>
         </div>
-    )
+    );
 }
 
 export default SearchByCategory
