@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiService = axios.create({
-  baseURL: 'http://localhost:3000/api', // Update this with your actual API base URL
+  baseURL: 'http://localhost:3000/api',
   timeout: 10000, 
   withCredentials: true,
 });
@@ -57,7 +57,7 @@ export const fetchProducts = async () => {
 export const fetchCategories = async () => {
     try {
         const response = await apiService.get('/category/complete');               
-        return response.data;
+        return response;
     } catch (error) {
         console.error('Error fetching categories service:', error);
         throw error;
@@ -83,10 +83,10 @@ export const fetchUser = async (token:string) => {
   try {
     const response = await apiService.get('/auth/user', {
       headers: { Authorization: `Bearer ${token}` },
-    });
+    });    
     return response.data;
   } catch (error) {
-    console.error('Error fetching user data service:', error);
+    console.error('Error fetching user data service:');
     throw error;
   }
 };
@@ -102,22 +102,43 @@ export const fetchLogin = async (email:string,password:string) => {
 };
 
 
-export const fetchSearchByCategory = async(categoryName:string, subCategoryName:string)=>{
+// export const fetchSearchByCategory = async(categoryName:string, subCategoryName:string)=>{
+//   try {
+//     const categoryResponse = await apiService.get(`/search/category/name/${categoryName}`)    
+//     const categoryData = categoryResponse.data
+
+//     const subCategoryResponse = await apiService.get(`/search/subcategory/name/${subCategoryName}`)
+//     const subCategoryData = subCategoryResponse.data
+
+//     const response = await apiService.get(`/search/${categoryData.data.id}/${subCategoryData.data.id}`)       
+    
+//     return {data:response.data,subCategoryData}
+    
+//   } catch (error) {
+//     console.error('Error fetching product base on category service');
+//     throw error;
+//   }
+// }
+
+export const fetchSearchByCategory = async (categoryName: string, subCategoryName: string) => {
   try {
-    const categoryResponse = await apiService.get(`/search/category/name/${categoryName}`)    
-    const categoryData = categoryResponse.data
+    const categoryResponse = await apiService.get(`/search/category/name/${categoryName}`);
+    const categoryData = categoryResponse.data;
 
-    const subCategoryResponse = await apiService.get(`/search/subcategory/name/${subCategoryName}`)
-    const subCategoryData = subCategoryResponse.data
+    const subCategoryResponse = await apiService.get(`/search/subcategory/name/${subCategoryName}`);
+    const subCategoryData = subCategoryResponse.data;
 
-    const response = await apiService.get(`/search/${categoryData.data.id}/${subCategoryData.data.id}`)       
-    
-    return {data:response.data.data,subCategoryData}
-    
+    const response = await apiService.get(`/search/${categoryData.data.id}/${subCategoryData.data.id}`);
+
+    return {
+      data: response.data.data,  // Extract only relevant data
+      subCategory: subCategoryData.data,
+    };
+
   } catch (error) {
-    console.error('Error fetching product base on category service');
+    console.error('Error fetching product base on category service', error);
     throw error;
   }
-}
+};
 
 export default apiService;

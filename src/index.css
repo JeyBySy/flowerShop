@@ -11,7 +11,7 @@ body {
   font-family: "Lato", sans-serif;
 }
 section {
-  @apply container mx-auto py-3 w-[95%] text-justify mb-1;
+  @apply container mx-auto py-3 w-[95%] text-justify mb-1 px-2;
 }
 .submenu {
   @apply overflow-y-auto h-fit max-h-[250px] w-[300px] flex flex-wrap justify-between;
