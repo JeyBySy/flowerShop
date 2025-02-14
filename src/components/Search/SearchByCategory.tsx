@@ -48,6 +48,15 @@ const SearchByCategory: React.FC<CategoryProps> = ({ data, loading, totalPages, 
             }
         });
 
+    // No record found
+    if (data.length === 0 && !loading) {
+        return (
+            <div className="flex justify-center items-center h-[50vh]">
+                <p className="text-lg font-semibold text-slate-800">No products found.</p>
+            </div>
+        );
+    }
+
     return (
         <div className="flex flex-col gap-5">
             {/* Sorting and Search Bar */}
@@ -67,10 +76,9 @@ const SearchByCategory: React.FC<CategoryProps> = ({ data, loading, totalPages, 
                     <input
                         placeholder="Search"
                         type="text"
-                        className="w-full text-xs p-1 rounded focus:outline-none border border-persian-rose-500 border-r-0"
+                        className="w-full text-xs p-1 rounded rounded-t-none rounded-b-none focus:outline-none border border-persian-rose-500 border-r-0 px-2"
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                        onChange={(e) => setSearchTerm(e.target.value)} />
                     <button className="px-3 py-1 border-l-0 bg-brilliant-rose-500 text-white border border-persian-rose-500">
                         <Search />
                     </button>
@@ -79,9 +87,11 @@ const SearchByCategory: React.FC<CategoryProps> = ({ data, loading, totalPages, 
 
             {/* Product Cards */}
             <div className="grid grid-cols-2 gap-2 xs:gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                {loading ? (
-                    <CardSkeleton cards={4} />
-                ) : (
+                {loading && (
+                    <CardSkeleton cards={12} />
+                )}
+
+                {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                         <Card
                             key={product.id}
@@ -94,6 +104,8 @@ const SearchByCategory: React.FC<CategoryProps> = ({ data, loading, totalPages, 
                             discount={0}
                         />
                     ))
+                ) : (
+                    <p className="text-lg font-semibold text-slate-800 text-center w-[100%]">No products found.</p>
                 )}
             </div>
 

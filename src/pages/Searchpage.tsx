@@ -14,12 +14,12 @@ const SearchPage: React.FC = () => {
     return (
         <section className="min-h-screen">
             {!error ? (
-                <div className="flex flex-col gap-2">
-                    <div className="grid grid-cols-[auto_1fr] items-center">
-                        <div className="w-full p-20">
+                <div className="lg:flex lg:flex-col gap-2 ">
+                    <div className="lg:grid lg:grid-cols-[auto_1fr] items-center">
+                        <div className="w-full p-10 lg:p-20 text-center">
                             <p className="text-4xl capitalize font-bold text-brilliant-rose-500">{subCategoryName}</p>
                         </div>
-                        <div className="w-full">
+                        <div className="w-full p-2">
                             <p className="text-3xl font-light">
                                 {subCategory?.description}
                             </p>

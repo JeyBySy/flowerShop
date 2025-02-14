@@ -48,8 +48,8 @@ const Homepage: React.FC = () => {
                     </div>
 
                     <div className={cardStyle}>
-                        {loading ? (
-                            <CardSkeleton cards={4} />  // Show skeletons while loading
+                        {!loading ? (
+                            <CardSkeleton cards={12} />  // Show skeletons while loading
                         ) : error ? (
                             <div>{error}</div>
                         ) : (
@@ -79,9 +79,9 @@ const Homepage: React.FC = () => {
                     </div>
                     <div className={cardStyle}>
                         {loading ? (
-                            <CardSkeleton cards={4} />  // Show skeletons while loading
+                            <CardSkeleton cards={12} />  // Show skeletons while loading
                         ) : (
-                            <CardSkeleton cards={4} />
+                            <CardSkeleton cards={12} />
                         )}
                     </div>
                 </div>
@@ -96,9 +96,9 @@ const Homepage: React.FC = () => {
                     </div>
                     <div className={cardStyle}>
                         {loading ? (
-                            <CardSkeleton cards={4} />  // Show skeletons while loading
+                            <CardSkeleton cards={12} />  // Show skeletons while loading
                         ) : (
-                            <CardSkeleton cards={4} />
+                            <CardSkeleton cards={12} />
                         )}
                     </div>
                 </div>
