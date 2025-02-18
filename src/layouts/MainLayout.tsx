@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../components/Global/Navbar';
 import Footer from '../components/Global/Footer';
+import { Analytics } from "@vercel/analytics/react";
 
 const MainLayout: React.FC = () => {
     return (
@@ -10,6 +11,7 @@ const MainLayout: React.FC = () => {
                 <Outlet /> {/* This will render the child route component */}
             </div>
             <Footer />
+            <Analytics />
         </>
     );
 };
