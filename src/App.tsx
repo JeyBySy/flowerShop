@@ -21,7 +21,7 @@ const App: React.FC = () => {
       <CartProvider>
         <Routes>
           <Route element={<MainLayout />}>
-            <Analytics />
+
             <Route index element={<Homepage />} />
             <Route path="/track-order" element={<TrackOrderpage />} />
             <Route path="/search" element={<Searchpage />} />
@@ -31,13 +31,15 @@ const App: React.FC = () => {
             <Route path="/product/:id/:item" element={<ProductPage />} />
             <Route path="/page-not-found" element={<ErrorPage />} />
             <Route path="*" element={<ErrorPage />} />
+            <Analytics />
           </Route>
 
           <Route element={<AuthLayout />}>
-            <Analytics />
+
             <Route path="/login" element={<Loginpage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forget-password" element={<Forgetpage />} />
+            <Analytics />
           </Route>
         </Routes>
       </CartProvider>
