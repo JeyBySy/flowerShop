@@ -13,6 +13,7 @@ import Cartpage from './pages/Cart/Cartpage';
 import Checkoutpage from './pages/Checkoutpage';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { Analytics } from "@vercel/analytics/react"
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
       <CartProvider>
         <Routes>
           <Route element={<MainLayout />}>
+            <Analytics />
             <Route index element={<Homepage />} />
             <Route path="/track-order" element={<TrackOrderpage />} />
             <Route path="/search" element={<Searchpage />} />
@@ -32,6 +34,7 @@ const App: React.FC = () => {
           </Route>
 
           <Route element={<AuthLayout />}>
+            <Analytics />
             <Route path="/login" element={<Loginpage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forget-password" element={<Forgetpage />} />
