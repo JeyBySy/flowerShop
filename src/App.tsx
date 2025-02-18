@@ -13,6 +13,7 @@ import Cartpage from './pages/Cart/Cartpage';
 import Checkoutpage from './pages/Checkoutpage';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { Analytics } from "@vercel/analytics/react"
 
 const App: React.FC = () => {
   return (
@@ -37,6 +38,7 @@ const App: React.FC = () => {
             <Route path="/forget-password" element={<Forgetpage />} />
           </Route>
         </Routes>
+        <Analytics />
       </CartProvider>
     </AuthProvider>
   );
