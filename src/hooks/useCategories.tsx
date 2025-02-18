@@ -29,7 +29,7 @@ export const useCategories = () => {
         const getCategories = async () => {
             try {
                 const categoriesData = await fetchCategories();
-                setCategories(categoriesData.data);
+                setCategories(categoriesData.data.data);
 
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (err) {
