@@ -3,7 +3,7 @@ import { fetchSearchByCategory } from '../services/apiService';
 import { ProductType } from "../types/productTypes";
 import { subCategoryTypes } from '../types/subCategoryTypes';
 
-export const useProductBaseCategory = (categoryName: string, subCategoryName: string) => {
+export const useProductBaseCategory = (categoryName: string, subCategoryName: string, sortOption: string, limit: string, page: number) => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [subCategory, setSubCategory] = useState<subCategoryTypes>();
     const [totalPages, setTotalPages] = useState(1);
@@ -15,7 +15,7 @@ export const useProductBaseCategory = (categoryName: string, subCategoryName: st
         const loadProducts = async () => {
             try {
                 setLoading(true);
-                const { data, subCategory } = await fetchSearchByCategory(categoryName, subCategoryName);
+                const { data, subCategory } = await fetchSearchByCategory(categoryName, subCategoryName, sortOption, parseInt(limit), page);
                 setProducts(data.products);
                 setSubCategory(subCategory);
                 setTotalPages(data.totalPages);
@@ -30,7 +30,7 @@ export const useProductBaseCategory = (categoryName: string, subCategoryName: st
         };
 
         loadProducts();
-    }, [categoryName, subCategoryName]);
+    }, [categoryName, subCategoryName, sortOption, limit, page]);
 
     return { products, subCategory, totalPages, totalItems, loading, error };
 };

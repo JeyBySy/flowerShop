@@ -120,7 +120,7 @@ export const fetchLogin = async (email:string,password:string) => {
 //   }
 // }
 
-export const fetchSearchByCategory = async (categoryName: string, subCategoryName: string) => {
+export const fetchSearchByCategory = async (categoryName: string, subCategoryName: string, sortItems:string, limit:number,page:number) => {
   try {
     const categoryResponse = await apiService.get(`/search/category/name/${categoryName}`);
     const categoryData = categoryResponse.data;
@@ -128,7 +128,7 @@ export const fetchSearchByCategory = async (categoryName: string, subCategoryNam
     const subCategoryResponse = await apiService.get(`/search/subcategory/name/${subCategoryName}`);
     const subCategoryData = subCategoryResponse.data;
 
-    const response = await apiService.get(`/search/${categoryData.data.id}/${subCategoryData.data.id}`);
+    const response = await apiService.get(`/search/${categoryData.data.id}/${subCategoryData.data.id}`,{ params: { sortItems, limit,page }})
 
     return {
       data: response.data.data,  // Extract only relevant data

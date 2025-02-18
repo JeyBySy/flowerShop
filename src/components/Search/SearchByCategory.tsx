@@ -83,6 +83,32 @@ const SearchByCategory: React.FC<CategoryProps> = ({ data, loading, totalPages, 
                         <Search />
                     </button>
                 </div>
+                {/* Pagination */}
+                <div className="flex justify-center gap-2 mt-5 ">
+                    <button
+                        disabled={1 === 1}
+                        // onClick={() => setPage(1 - 1)}
+                        className="px-3 py-1 border rounded disabled:opacity-50"
+                    >
+                        Prev
+                    </button>
+                    {[...Array(totalPages)].map((_, index) => (
+                        <button
+                            key={index + 1}
+                            // onClick={() => setPage(index + 1)}
+                            className={`px-3 py-1 border rounded ${1 === index + 1 ? 'bg-brilliant-rose-500 text-white' : ''}`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button
+                        disabled={1 === 1}
+                        // onClick={() => setPage(1 + 1)}
+                        className="px-3 py-1 border rounded disabled:opacity-50"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
 
             {/* Product Cards */}
@@ -109,32 +135,7 @@ const SearchByCategory: React.FC<CategoryProps> = ({ data, loading, totalPages, 
                 )}
             </div>
 
-            {/* Pagination */}
-            <div className="flex justify-center gap-2 mt-5">
-                <button
-                    disabled={1 === 1}
-                    // onClick={() => setPage(1 - 1)}
-                    className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                    Prev
-                </button>
-                {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index + 1}
-                        // onClick={() => setPage(index + 1)}
-                        className={`px-3 py-1 border rounded ${1 === index + 1 ? 'bg-brilliant-rose-500 text-white' : ''}`}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                <button
-                    disabled={1 === 1}
-                    // onClick={() => setPage(1 + 1)}
-                    className="px-3 py-1 border rounded disabled:opacity-50"
-                >
-                    Next
-                </button>
-            </div>
+
         </div>
     );
 };
