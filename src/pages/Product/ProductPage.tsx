@@ -37,7 +37,7 @@ const ProductPage: React.FC = () => {
 
     return (
         <section className="flex mb-20 lg:mb-0 flex-col gap-5 overflow-hidden">
-            <div className=" grid-cols-1 lg:grid-cols-2 gap-4 hidden lg:grid">
+            <div className="grid-cols-1 lg:grid-cols-2 gap-4 hidden lg:grid">
                 <div className="flex flex-col gap-4">
                     <ImageCarousel />
                     {/* {JSON.stringify(product)} */}
