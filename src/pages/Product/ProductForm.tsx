@@ -5,29 +5,37 @@ import dayjs from 'dayjs'
 
 const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
     const { id, name, price, stock, variety, averageRating, ProductRatings } = data;
-
-    const [selectVariety, setSelectVariety] = useState<string>(variety[0]);
-
-    const timeSlots = [
-        { label: "Anytime", range: "8:00 AM - 6:00 PM" },
-        { label: "Noon", range: "10:00 AM - 1:00 PM" },
-        { label: "Afternoon", range: "1:00 PM - 4:00 PM" },
-        { label: "Evening", range: "4:00 PM - 8:00 PM" },
-        { label: "Midnight", range: "8:00 PM - 11:00 PM" },
-    ];
     const currentTime = dayjs();
-    const isPast10AM = currentTime.hour() >= 10;
+    const isPast4PM = currentTime.hour() >= 16; // 4:00 PM (16:00) cut-off
+    const timeToStartExpressDelivery = 10
     const today = dayjs().format("YYYY-MM-DD");
     const tomorrow = dayjs().add(1, "day").format("YYYY-MM-DD");
-    const [selectedDate, setSelectedDate] = useState(isPast10AM ? tomorrow : today);
+    const currentHour = dayjs().hour();
+
+    const [selectVariety, setSelectVariety] = useState<string>(variety[0]);
+    const [selectedDate, setSelectedDate] = useState(isPast4PM ? tomorrow : today);
     const [selectedTime, setSelectedTime] = useState<string>("8:00 AM - 6:00 PM");
-
     const [quantityValue, setQuantityValue] = useState(1);
+
+    const timeSlots = [
+        { label: "Express Delivery", range: "Express", end: 24 },
+        { label: "Anytime", range: "8:00 AM - 6:00 PM", end: 14 },
+        { label: "Noon", range: "10:00 AM - 1:00 PM", end: 11 },
+        { label: "Afternoon", range: "1:00 PM - 4:00 PM", end: 15 },
+        { label: "Evening", range: "4:00 PM - 8:00 PM", end: 18 },
+        { label: "Midnight", range: "8:00 PM - 11:00 PM", end: 21 }
+
+    ];
+
+    const deliveryFee = (100).toFixed(2)
+    let availableSlots = timeSlots.filter(slot => currentHour < slot.end); // Removing data in timeSlots base on the time past by    
+
+    if (currentHour >= timeToStartExpressDelivery && selectedDate !== dayjs().format("YYYY-MM-DD")) {
+        availableSlots = timeSlots.filter(slot => slot.range.toLowerCase() !== "express"); // Remove "Express" slot
+    }
+
+    const totalSelectedProduct: number = parseFloat((Number(price) * quantityValue + (selectedTime == "Express" ? 100 : 0)).toFixed(2));
     const maxinputvalue: number = stock ? stock : 0;
-
-
-    const totalSelectedProduct: number = parseFloat((Number(price) * quantityValue).toFixed(2));
-
 
     const handleNumberInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const numberValue = Number(e.target.value.replace(/[^0-9]/g, ""));
@@ -138,8 +146,8 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
                     <button
                         type="button"
                         onClick={() => handleDateSelection(0)}
-                        className={`px-3 py-8 text-sm border rounded-md ${selectedDate === today ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100"} ${isPast10AM ? "opacity-50 cursor-not-allowed" : ""}`}
-                        disabled={isPast10AM}
+                        className={`px-3 py-8 text-sm border rounded-md ${selectedDate === today ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100"} ${isPast4PM ? "opacity-50 cursor-not-allowed" : ""}`}
+                        disabled={isPast4PM}
                     >
                         Today ({dayjs().format("MMM DD")})
                     </button>
@@ -163,7 +171,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
                         type="date"
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        min={dayjs().format("YYYY-MM-DD")}
+                        min={isPast4PM ? dayjs().add(1, "day").format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD")}
                         onKeyDown={(e) => e.preventDefault()}
                         className={`p-2 border w-full rounded-md ${![dayjs().format("YYYY-MM-DD"), dayjs().add(1, "day").format("YYYY-MM-DD"), dayjs().add(2, "day").format("YYYY-MM-DD")].includes(selectedDate) ? "border-persian-rose-500" : ""}`}
                     />
@@ -174,11 +182,12 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
             <div className="flex flex-col gap-5">
                 <p className="text-sm text-gray-500">Select Delivery Time:</p>
                 <div className="lg:flex lg:flex-wrap sm:grid gap-4">
-                    {timeSlots.map((slot, index) => (
-                        <label key={index}
-                            className={`flex items-center gap-4 text-sm border px-2 py-3 rounded-sm cursor-pointer 
-                            ${selectedTime === slot.range ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100"}`
-                            }>
+                    {availableSlots.map((slot, index) => (
+                        <label
+                            key={index}
+                            className={`flex relative items-center gap-4 text-sm border px-2 py-3 rounded-sm cursor-pointer  
+                            ${selectedTime === slot.range ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100"}`}
+                        >
                             <input
                                 type="radio"
                                 name="deliveryTime"
@@ -186,7 +195,9 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
                                 className="hidden"
                                 onChange={() => setSelectedTime(slot.range)}
                             />
-                            <span>{slot.label} ({slot.range})</span>
+                            <p>
+                                {slot.label} {slot.range.toLowerCase() !== "express" ? `(${slot.range})` : <span className={`text-xs ${selectedTime === slot.range ? "text-white" : "text-persian-rose-500"}`}>(+{deliveryFee})</span>}
+                            </p>
                         </label>
                     ))}
                 </div>
@@ -203,7 +214,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
                 </div>
                 <div className='flex items-center'>
                     <p className={titleCategory}>Select Delivery Time: </p>
-                    <p className={valueCategory}>{selectedTime}</p>
+                    <p className={valueCategory}>{selectedTime === "Express" ? `${selectedTime} + ${deliveryFee}` : selectedTime}</p>
                 </div>
                 <div className='flex items-center'>
                     <p className={titleCategory}>Quantity: </p>
@@ -235,7 +246,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
                     <button className="btn_styles-1 w-full text-sm" type="submit">Add to Cart</button>
                 </div>
             </div>
-        </form>
+        </form >
     );
 };
 
