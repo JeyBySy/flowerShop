@@ -13,6 +13,7 @@ import Cartpage from './pages/Cart/Cartpage';
 import Checkoutpage from './pages/Checkoutpage';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import ProtectedLayout from './layouts/ProtectedLayout';
 
 const App: React.FC = () => {
   return (
@@ -21,11 +22,17 @@ const App: React.FC = () => {
         <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<Homepage />} />
+
+            {/* Required authentication */}
+            <Route element={<ProtectedLayout />}>
+              <Route path="/cart" element={<Cartpage />} />
+              <Route path="/checkout" element={<Checkoutpage />} />
+            </Route>
+
             <Route path="/track-order" element={<TrackOrderpage />} />
             <Route path="/search" element={<Searchpage />} />
             <Route path="/search/:categoryName/:subCategoryName" element={<Searchpage />} />
-            <Route path="/cart" element={<Cartpage />} />
-            <Route path="/checkout" element={<Checkoutpage />} />
+
             <Route path="/product/:id/:item" element={<ProductPage />} />
             <Route path="/page-not-found" element={<ErrorPage />} />
             <Route path="*" element={<ErrorPage />} />

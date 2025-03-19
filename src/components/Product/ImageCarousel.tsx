@@ -22,9 +22,9 @@ const ImageCarousel: React.FC = () => {
 
     return (
         <div className="flex px-5 flex-col lg:flex-row h-fit">
-            <div className='flex flex-col gap-2 lg:w-full h-full border'>
+            <div className='flex flex-col gap-2 lg:w-full h-full '>
                 {/* Main image display */}
-                <div className="relative flex w-full h-[500px] items-center justify-center mx-auto overflow-hidden bg-white  ">
+                <div className="relative flex w-full h-[500px] items-center justify-center mx-auto overflow-hidden bg-white border">
                     {/* Previous button */}
                     <button className="absolute left-0 top-1/2  transform -translate-y-1/2 bg-white lg:px-10 hover:shadow-md z-10 h-full" onClick={handlePrevImage} ><ChevronLeft /></button>
                     <img src={images[currentImageIndex]} alt="" className="bg-gray-50 w-[70%] p-10 h-full object-contain" />

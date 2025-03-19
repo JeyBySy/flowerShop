@@ -40,7 +40,7 @@ export const useProducts = () => {
             try {
                 const response = await fetchProducts();
                 setProducts(response.data);
-                console.log(response.data);
+                // console.log(response.data);
 
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (error) {

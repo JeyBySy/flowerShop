@@ -141,4 +141,39 @@ export const fetchSearchByCategory = async (categoryName: string, subCategoryNam
   }
 };
 
+export const fetchCart = async () => {
+  try {
+    const cartResponse = await apiService.get(`/cart/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    return cartResponse.data;
+  } catch (error) {
+    console.error("Error fetching cart based on customerId:", error);
+    throw error;
+  }
+};
+
+export const addItemToCart = async (customerId: string, item: { productId: string; quantity: number }) => {
+  try {
+    const response = await apiService.post(
+      `/cart/${customerId}/add`,
+      item,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding item to cart:", error);
+    throw error;
+  }
+};
+
+
 export default apiService;

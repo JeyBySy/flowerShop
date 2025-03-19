@@ -14,14 +14,12 @@ const LoginForm: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const from = location.state?.from?.pathname || "/";
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setErrorMessage(''); // Clear previous errors
         try {
             await login(email, password);
-            navigate(from, { replace: true });
+            navigate(location.state?.from || "/", { replace: true });
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             setErrorMessage('Invalid email or password. Please try again.');

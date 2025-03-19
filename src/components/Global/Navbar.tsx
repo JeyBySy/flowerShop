@@ -1,6 +1,6 @@
 import { Search, ShoppingCart } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ShopHeader from "./ShopHeader";
 import MenuSkeleton from "./Skeleton/MenuSkeleton";
 import { useCategories } from '../../hooks/useCategories';
@@ -9,7 +9,8 @@ import { useAuth } from "../../context/AuthContext";
 import { fromKebabCase, toKebabCase } from "../../utils/formatSpaceString";
 
 const Navbar = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
     const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false); // State for mobile menu
     const { cart } = useCart();
@@ -17,12 +18,19 @@ const Navbar = () => {
     const { categories, loading, error } = useCategories();
 
     useEffect(() => {
-        setCartCount(cart.length);
-
+        setCartCount(cart?.CartItems?.length || 0);
     }, [cart]);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const handleCartPage = () => {
+        if (!user) {
+            navigate('/login', { state: { from: "/cart" } });
+        } else {
+            navigate('/cart'); // Redirects to the cart page when logged in
+        }
     };
 
     return (
@@ -37,7 +45,7 @@ const Navbar = () => {
                         <div className="flex items-center gap-5 justify-end">
                             <div className="cursor-pointer"><Link to="/track-order">Track Order</Link></div>
                             {user ? (
-                                <div className="cursor-pointer">{user?.userData?.first_name} {user?.userData?.last_name}
+                                <div onClick={logout} className="cursor-pointer">{user?.userData?.first_name} {user?.userData?.last_name}
 
                                 </div>
                             ) : (
@@ -104,14 +112,14 @@ const Navbar = () => {
                             )}
                         </>
                     )}
-                    <Link to={'/cart'} className="cursor-pointer relative">
+                    <div onClick={handleCartPage} className="cursor-pointer relative">
                         {cartCount > 0 && (
                             <span className="min-w-[25px] absolute -top-3 -right-5 text-white bg-zest-500 rounded-full text-sm flex justify-center items-center">
                                 {cartCount}
                             </span>
                         )}
                         <ShoppingCart width={"25px"} height={"20px"} />
-                    </Link>
+                    </div>
                 </div>
             </section >
         </div >

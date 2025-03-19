@@ -2,40 +2,60 @@ import React from 'react'
 import SampleImage from '../..//assets/flowers/sample.png'
 import { Link } from 'react-router-dom'
 import './cart.css'
+import { useCart } from '../../context/CartContext'
 
 const Cartpage: React.FC = () => {
+
+    const { cart } = useCart()
     return (
         <section className='bg-white mt-5 lg:w-[60%] md:w-full w-full p-5 rounded shadow'>
-            <div className='flex flex-col gap-2 min-h-[60vh]  relative'>
-                <h1 className='text-xl border-b-2'> Orders </h1>
-                <div className='flex'>
-                    <div className='flex-grow-0 flex items-center justify-center  p-3'>
-                        <input type="checkbox" name="" id="" />
-                    </div>
-                    <div className='flex items-center justify-center  p-3'>
-                        <img src={SampleImage} alt="" className='min-w-10 h-9 object-contain px-5' />
-                        <p className='lg:w-[300px] text-sm'>Namedasdqwdasd sad qwd asd Lorem ipsum dolor lorem sit amet consectetur adipisicing elit. O.</p>
-                    </div>
-                    <div className='flex-grow flex items-center justify-center  p-3'>
-                        <div className="relative flex items-center max-w-[8rem]">
-                            <button type="button" >
-                                <svg className="w-3 h-3 text-black-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                </svg>
-                            </button>
-                            <input type="text" id="quantity-input" className="h-11 text-center text-sm block w-full py-2.5 focus:outline-none quantityInput" placeholder="999" required />
-                            <button type="button" >
-                                <svg className="w-3 h-3 text-gray-900 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div className='flex-grow flex items-center justify-center  p-3'>
-                        Summray
-                    </div>
-                    <div className='flex-grow-0 flex items-center justify-center  p-3'>
-                        Delete
+            <div className='flex flex-col gap-2 min-h-[60vh] relative'>
+                <div className=' flex flex-col'>
+                    <h1 className='text-xl border-b-2'> Orders </h1>
+                    <div className='flex gap-1 flex-col'>
+                        {cart?.CartItems && cart.CartItems.length > 0 ? (
+                            cart.CartItems.map((item, index) => (
+                                <div className='flex border' key={index}>
+                                    <div className='flex-grow-0 flex items-center justify-center  p-3'>
+                                        <input type="checkbox" name="" id="" />
+                                    </div>
+
+                                    <div className="flex flex-col ">
+                                        <div className='flex items-center justify-center p-3'>
+                                            <img src={SampleImage} alt="" className="min-w-10 h-9 object-contain px-5" />
+                                            <p className="lg:w-[300px] text-sm">
+                                                {item.Product?.name}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* <div className='flex-grow flex items-center justify-center  p-3'>
+                                    <div className="relative flex items-center max-w-[8rem]">
+                                        <button type="button" >
+                                            <svg className="w-3 h-3 text-black-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
+                                            </svg>
+                                        </button>
+                                        <input type="text" id="quantity-input" className="h-11 text-center text-sm block w-full py-2.5 focus:outline-none quantityInput" placeholder="999" required />
+                                        <button type="button" >
+                                            <svg className="w-3 h-3 text-gray-900 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div> */}
+
+                                    <div className='flex-grow flex items-center justify-center  p-3'>
+                                        Summray
+                                    </div>
+                                    <div className='flex-grow-0 flex items-center justify-center  p-3'>
+                                        Delete
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className='w-full text-center text-gray-500'>No items in the cart</div>
+                        )}
                     </div>
                 </div>
                 <div className='flex w-full lg:absolute bottom-0 border-t-2 p-5 items-center justify-center gap-2 bg-white'>
@@ -52,6 +72,7 @@ const Cartpage: React.FC = () => {
                         <Link to={'/checkout'} className="bg-avocado-600 p-2 rounded w-full px-10 text-white" type="submit">Checkout</Link>
                     </div>
                 </div>
+
             </div>
         </section>
     )

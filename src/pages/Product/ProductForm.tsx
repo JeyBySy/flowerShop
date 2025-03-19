@@ -20,6 +20,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
     const timeSlots = [
         { label: "Express Delivery", range: "Express", end: 24 },
         { label: "Anytime", range: "8:00 AM - 6:00 PM", end: 14 },
+        { label: "Morning", range: "7:00 AM - 10:00 AM", end: 8 },
         { label: "Noon", range: "10:00 AM - 1:00 PM", end: 11 },
         { label: "Afternoon", range: "1:00 PM - 4:00 PM", end: 15 },
         { label: "Evening", range: "4:00 PM - 8:00 PM", end: 18 },

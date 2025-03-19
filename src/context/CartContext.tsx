@@ -1,46 +1,63 @@
-import { ProductType } from '../types/productTypes';
+import { fetchCart } from '../services/apiService';
+import { CartType } from '../types/cartTypes';
 import { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from './AuthContext';
 
 interface CartContextType {
-    cart: ProductType[];
-    addToCart: (product: ProductType) => void;
-    removeFromCart: (id: string) => void;
+    cart: CartType | null;
+    loading: boolean;
+    // addToCart: (product: ProductType) => void;
+    // removeFromCart: (id: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [cart, setCart] = useState<ProductType[]>(() => {
-        // Initialize state from localStorage if available, else empty array
-        const savedCart = localStorage.getItem("cart");
-        return savedCart ? JSON.parse(savedCart) : [];
-    });
+    const { user } = useAuth();
+    const [cart, setCart] = useState<CartType | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    // Save cart to localStorage whenever it changes
     useEffect(() => {
-        if (cart.length > 0) {
-            localStorage.setItem("cart", JSON.stringify(cart));
-        } else {
-            localStorage.removeItem("cart"); // Optionally remove cart if empty
+        if (!user) {
+            setLoading(false);
+            return;
         }
-    }, [cart]);
 
-    const addToCart = (product: ProductType) => {
-        setCart((prevCart) => {
-            const updatedCart = [...prevCart, product];
-            return updatedCart;
-        });
-    };
 
-    const removeFromCart = (id: string) => {
-        setCart((prevCart) => {
-            const updatedCart = prevCart.filter((item) => item.id !== id);
-            return updatedCart;
-        });
-    };
+        const loadCart = async () => {
+            setLoading(true);
+            try {
+                const { data } = await fetchCart();
+                setCart(data);
+            } catch (error) {
+                console.error("Error loading cart:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadCart();
+    }, [user]);
+
+    // const addToCart = async (product: ProductType) => {
+    //     try {
+    //         await addItemToCart({ productId: product.id, quantity: 1 });
+
+    //         setCart((prevCart) => [...prevCart, product]);
+    //     } catch (error) {
+    //         console.error("Error adding to cart:", error);
+    //     }
+    // };
+
+    // const removeFromCart = (id: string) => {
+    //     setCart((prevCart) => {
+    //         const updatedCart = prevCart.filter((item) => item.id !== id);
+    //         return updatedCart;
+    //     });
+    // };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cart, loading }}>
             {children}
         </CartContext.Provider>
     );
