@@ -8,57 +8,93 @@ const Cartpage: React.FC = () => {
 
     const { cart } = useCart()
     return (
-        <section className='bg-white mt-5 lg:w-[60%] md:w-full w-full p-5 rounded shadow'>
-            <div className='flex flex-col gap-2 min-h-[60vh] relative'>
-                <div className=' flex flex-col'>
-                    <h1 className='text-xl border-b-2'> Orders </h1>
-                    <div className='flex gap-1 flex-col'>
-                        {cart?.CartItems && cart.CartItems.length > 0 ? (
-                            cart.CartItems.map((item, index) => (
-                                <div className='flex border' key={index}>
-                                    <div className='flex-grow-0 flex items-center justify-center  p-3'>
-                                        <input type="checkbox" name="" id="" />
-                                    </div>
+        <section className='bg-white mt-5 lg:w-[75%] md:w-full w-full p-5 rounded shadow mb-10'>
+            <div className='flex flex-col gap-2 relative'>
+                <div className="flex flex-col">
+                    <h1 className="text-2xl font-semibold border-b-2 mb-2"> Orders </h1>
 
-                                    <div className="flex flex-col ">
-                                        <div className='flex items-center justify-center p-3'>
-                                            <img src={SampleImage} alt="" className="min-w-10 h-9 object-contain px-5" />
-                                            <p className="lg:w-[300px] text-sm">
-                                                {item.Product?.name}
-                                            </p>
-                                        </div>
-                                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full border-gray-300">
+                            {/* Table Header */}
+                            <thead className="bg-gray-50 text-gray-500 text-sm">
+                                <tr>
+                                    <th className="w-12 text-center p-3 ">#</th>
+                                    <th className="text-center p-3 ">Product</th>
+                                    <th className="w-[25%] text-center p-3 ">Variety</th>
+                                    <th className="w-20 text-center p-3 ">Quantity</th>
+                                    <th className="w-32 text-center p-3 ">Total Price</th>
+                                    <th className="w-32 text-center p-3 ">Delivery Date</th>
+                                    <th className="w-32 text-center p-3 ">Delivery Time</th>
+                                    <th className="w-24 text-center p-3 ">Actions</th>
+                                </tr>
+                            </thead>
 
-                                    {/* <div className='flex-grow flex items-center justify-center  p-3'>
-                                    <div className="relative flex items-center max-w-[8rem]">
-                                        <button type="button" >
-                                            <svg className="w-3 h-3 text-black-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                            </svg>
-                                        </button>
-                                        <input type="text" id="quantity-input" className="h-11 text-center text-sm block w-full py-2.5 focus:outline-none quantityInput" placeholder="999" required />
-                                        <button type="button" >
-                                            <svg className="w-3 h-3 text-gray-900 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div> */}
-
-                                    <div className='flex-grow flex items-center justify-center  p-3'>
-                                        Summray
-                                    </div>
-                                    <div className='flex-grow-0 flex items-center justify-center  p-3'>
-                                        Delete
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className='w-full text-center text-gray-500'>No items in the cart</div>
-                        )}
+                            {/* Table Body */}
+                            <tbody>
+                                {cart?.CartItems && cart.CartItems.length > 0 ? (
+                                    cart.CartItems.map((item, index) => (
+                                        <>
+                                            <tr key={index} data-id={item.Product?.id} className="hover:bg-gray-100 hover:cursor-pointer">
+                                                <td className="text-center py-10">
+                                                    <input type="checkbox" />
+                                                </td>
+                                                <td className='py-5 px-2'>
+                                                    <div className="flex items-center">
+                                                        <div className="flex items-center justify-center w-[70px] h-[70px] shrink-0">
+                                                            <img src={SampleImage} alt="" className="w-full h-full object-contain" />
+                                                        </div>
+                                                        <p className="text-sm px-2 flex-grow">
+                                                            {item.Product?.name}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td className="p-3">
+                                                    {Array.isArray(item?.variety)
+                                                        ? item.variety.map((v, i) => {
+                                                            const parsedVariety = typeof v === "string" ? JSON.parse(v) : v;
+                                                            return (
+                                                                <div className={`grid grid-cols-4 text-center text-sm text-gray-500 py-1 ${i !== item.variety.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
+                                                                    <p className='text-start'>{parsedVariety.name} </p>
+                                                                    <span className='text-start text-persian-rose-600'> (₱{item.Product.price})</span>
+                                                                    <p className='flex items-center justify-center'>x</p>
+                                                                    <p className="text-end text-persian-rose-600">{parsedVariety.quantity}</p>
+                                                                </div>
+                                                            );
+                                                        })
+                                                        : <p className="text-gray-500 text-sm">No variety available</p>
+                                                    }
+                                                </td>
+                                                <td className="text-center p-3 ">{item.quantity}</td>
+                                                <td className="text-center p-3 text-persian-rose-600">₱ {item.total}</td>
+                                                <td className="text-center p-3 ">
+                                                    <p className='w-full text-sm text-persian-rose-600'>{item.deliveryDate}</p>
+                                                </td>
+                                                <td className="text-center p-3 ">
+                                                    <p className=' w-full text-sm text-persian-rose-600'>{item.deliveryTime}</p>
+                                                </td>
+                                                <td className="text-center p-3 ">
+                                                    <div className="flex gap-2 justify-center">
+                                                        <button className="text-red-500">Delete</button>
+                                                        <button className="text-red-500">Delete</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td className="w-full text-center text-gray-500 py-3 border">
+                                            No items in the cart
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div className='flex w-full lg:absolute bottom-0 border-t-2 p-5 items-center justify-center gap-2 bg-white'>
+
+
+                <div className='flex w-full bottom-0 border-t-2 px-4 py-5 items-center justify-center gap-2 bg-white'>
                     <div className='flex gap-2'>
                         <input type="checkbox" name="" id="selectAllId" />
                         <label htmlFor='selectAllId'> Select all</label>
@@ -72,9 +108,8 @@ const Cartpage: React.FC = () => {
                         <Link to={'/checkout'} className="bg-avocado-600 p-2 rounded w-full px-10 text-white" type="submit">Checkout</Link>
                     </div>
                 </div>
-
-            </div>
-        </section>
+            </div >
+        </section >
     )
 }
 

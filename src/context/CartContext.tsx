@@ -28,6 +28,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setLoading(true);
             try {
                 const { data } = await fetchCart();
+                console.log(data);
+
                 setCart(data);
             } catch (error) {
                 console.error("Error loading cart:", error);
