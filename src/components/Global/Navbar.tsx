@@ -7,11 +7,13 @@ import { useCategories } from '../../hooks/useCategories';
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { fromKebabCase, toKebabCase } from "../../utils/formatSpaceString";
+import SampleImage from '../..//assets/flowers/sample.png'
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
+    const [isCartHovered, setIsCartHovered] = useState<boolean>(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false); // State for mobile menu
     const { cart } = useCart();
     const [cartCount, setCartCount] = useState<number>(0)
@@ -29,6 +31,7 @@ const Navbar = () => {
         if (!user) {
             navigate('/login', { state: { from: "/cart" } });
         } else {
+            setIsCartHovered(false);
             navigate('/cart'); // Redirects to the cart page when logged in
         }
     };
@@ -49,9 +52,13 @@ const Navbar = () => {
 
                                 </div>
                             ) : (
-                                <div className="cursor-pointer"><Link to="/login">Login</Link></div>
+                                <>
+                                    <div className="cursor-pointer"><Link to="/login">Login</Link></div>
+                                    <div className="cursor-pointer"><Link to="/register">Register</Link></div>
+                                </>
+
                             )}
-                            <div className="cursor-pointer"><Link to="/register">Register</Link></div>
+
                         </div>
                     </div>
                 </div>
@@ -112,13 +119,53 @@ const Navbar = () => {
                             )}
                         </>
                     )}
-                    <div onClick={handleCartPage} className="cursor-pointer relative">
+                    <div
+                        onClick={handleCartPage}
+                        onMouseEnter={() => setIsCartHovered(true)}
+                        onMouseLeave={() => setIsCartHovered(false)}
+                        className="cursor-pointer relative">
                         {cartCount > 0 && (
                             <span className="min-w-[25px] absolute -top-3 -right-5 text-white bg-zest-500 rounded-full text-sm flex justify-center items-center">
                                 {cartCount}
                             </span>
                         )}
                         <ShoppingCart width={"25px"} height={"20px"} />
+                        {isCartHovered && (
+                            <div className="absolute top-full -left-28 min-h-fit bg-white border shadow-lg z-50 w-64 p-3 rounded-sm">
+                                {cartCount > 0 ? (
+                                    <ul>
+                                        {cart?.CartItems?.map((item) => (
+                                            <li key={item.id} className="flex items-center gap-3 py-2 border-b last:border-none">
+                                                <img src={SampleImage} alt={SampleImage} className="w-10 h-10 object-cover rounded" />
+                                                <div className="text-xs w-full ">
+                                                    <p className="font-black text-start">{item.Product.name}</p>
+                                                    {Array.isArray(item?.variety)
+                                                        ? item.variety.map((v, i) => {
+                                                            const parsedVariety = typeof v === "string" ? JSON.parse(v) : v;
+                                                            return (
+                                                                <div className={`grid grid-cols-4 text-center text-gray-500 py-1 text-xs ${i !== item.variety.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
+                                                                    <p className='text-start'>{parsedVariety.name}</p>
+                                                                    <span className='text-start text-persian-rose-600 justify-center items-center flex'>(₱{item.Product.price})</span>
+                                                                    <p className='flex items-center justify-center w-full'>x</p>
+                                                                    <p className="text-persian-rose-600 justify-center items-center flex">{parsedVariety.quantity}</p>
+                                                                </div>
+                                                            );
+                                                        })
+                                                        : <p className="text-gray-500 text-sm">No variety available</p>
+                                                    }
+                                                    <div className="border-t border-gray-300 text-persian-rose-600 font-semibold pt-5 text-end flex justify-between">
+                                                        <span className="text-gray-400 font-normal">Total:</span>
+                                                        ₱{item.total}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p className="text-gray-500 text-sm py-2">Your cart is empty</p>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </section >
