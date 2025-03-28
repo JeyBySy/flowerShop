@@ -16,9 +16,9 @@ const ProductPage: React.FC = () => {
 
     const { product, loading, error } = useProductDetails(id || "");
 
-
     if (loading) {
-        return <div>Loading product details...</div>;
+        // return <div>Loading product details...</div>;
+        return <></>;
     }
 
     if (error) {

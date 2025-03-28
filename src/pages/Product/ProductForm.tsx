@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import SampleImage from '../../assets/flowers/sample.png'
 import { ProductProps } from '../../types/productTypes'
 import dayjs from 'dayjs'
+import { motion } from 'framer-motion';
 
 const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
-    const { id, name, price, stock, variety, averageRating, ProductRatings } = data;
+    const { id, name, price, stock, variants, averageRating, ProductRatings } = data;
     const currentTime = dayjs();
     const isPast4PM = currentTime.hour() >= 16; // 4:00 PM (16:00) cut-off
     const timeToStartExpressDelivery = 10
@@ -12,7 +13,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
     const tomorrow = dayjs().add(1, "day").format("YYYY-MM-DD");
     const currentHour = dayjs().hour();
 
-    const [selectVariety, setSelectVariety] = useState<string>(variety[0]);
+    const [selectVariety, setSelectVariety] = useState<string>(variants[0]?.variety || "");
     const [selectedDate, setSelectedDate] = useState(isPast4PM ? tomorrow : today);
     const [selectedTime, setSelectedTime] = useState<string>("8:00 AM - 6:00 PM");
     const [quantityValue, setQuantityValue] = useState(1);
@@ -36,7 +37,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
     }
 
     const totalSelectedProduct: number = parseFloat((Number(price) * quantityValue + (selectedTime == "Express" ? 100 : 0)).toFixed(2));
-    const maxinputvalue: number = stock ? stock : 0;
+    const maxinputvalue: number = stock ? stock : 1;
 
     const handleNumberInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const numberValue = Number(e.target.value.replace(/[^0-9]/g, ""));
@@ -52,7 +53,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
     };
 
     const handleDecrement = () => {
-        if (!(quantityValue <= 0)) {
+        if (!(quantityValue <= 1)) {
             setQuantityValue(quantityValue - 1);
         }
     };
@@ -66,7 +67,11 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
     const valueCategory: string = "w-full text-sm text-end text-persian-rose-500"
 
     return (
-        <form className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded" data-id={id}>
+        <motion.form
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded" data-id={id}>
             <div className="flex flex-col md:flex-row border-b-2 border-slate-200">
                 <h1 className="w-[80%] text-2xl capitalize font-bold text-persian-rose-500">{name}</h1>
                 <div className="w-[20%] flex gap-2 mt-2 md:mt-0">
@@ -83,21 +88,23 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
             </div>
 
             {/* Variety */}
-            <div className="flex gap-5 items-center">
-                <p className="text-sm min-w-[70px] text-gray-500 ">Variety: </p>
-                <div className="flex gap-1 w-full flex-wrap justify-start">
-                    {variety.map((item, index) => (
-                        <div key={index}
-                            className={`border rounded flex px-3 py-3 flex-row justify-start items-center cursor-pointer 
-                            ${selectVariety === item ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100 "}`}
-                            onClick={() => setSelectVariety(item)}
-                        >
-                            <img src={SampleImage} alt={item} className="w-10 h-8 object-contain" />
-                            <span className="text-xs">{item}</span>
-                        </div>
-                    ))}
+            {variants && variants.length > 0 && (
+                <div className="flex gap-5 items-center">
+                    <p className="text-sm min-w-[70px] text-gray-500 ">Variety: </p>
+                    <div className="flex gap-1 w-full flex-wrap justify-start">
+                        {variants.map((item, index) => (
+                            <div key={index}
+                                className={`border capitalize rounded flex px-3 py-3 flex-row justify-start items-center cursor-pointer 
+                                ${selectVariety === item.variety ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100 "}`}
+                                onClick={() => setSelectVariety(item.variety)}
+                            >
+                                <img src={SampleImage} alt={item.variety} className="w-10 h-8 object-contain" />
+                                <span className="text-xs">{item.variety}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
 
             {/* Quantity */}
             <div className="flex gap-5 items-center">
@@ -117,7 +124,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
                         onChange={handleNumberInputValue}
                         type="text"
                         id="quantity-input"
-                        className="border-x-0 border-gray-300 h-11 text-center text-sm block w-full py-2.5 focus:outline-none"
+                        className="border-x-0 border-gray-300 h-11 text-center text-sm block w-full py-2.5 focus:outline-none pointer-events-none"
                         placeholder="999"
                         required
                     />
@@ -205,10 +212,13 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
             </div>
 
             <div className='w-full flex gap-2 flex-col bg-gray-50 p-5 '>
-                <div className='flex items-center'>
-                    <p className={titleCategory}>Variety:</p>
-                    <p className={valueCategory}>{name} (<span className='font-black'>{selectVariety}</span> )</p>
-                </div>
+                {selectVariety && (
+                    <div className='flex items-center'>
+
+                        <p className={titleCategory}>Variety:</p>
+                        <p className={valueCategory}>{name} (<span className='font-black'>{selectVariety}</span> )</p>
+                    </div>
+                )}
                 <div className='flex items-center'>
                     <p className={titleCategory}>Select Delivery Date: </p>
                     <p className={valueCategory}>{dayjs(selectedDate).format(" MMMM DD, YYYY")}</p>
@@ -233,9 +243,9 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
             </div>
 
             {/* Note/Warning customer's future orders */}
-            {/* <p className="text-sm italic">
+            <p className="text-sm italic">
                 <span className="text-red-500">Important!</span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex dolor itaque omnis dignissimos nulla aliquam reprehenderit nesciunt impedit aut? Quaerat nesciunt assumenda nisi earum consectetur asperiores cumque laudantium fugiat ullam!
-            </p> */}
+            </p>
 
             <div className="w-full fixed border bottom-0 left-0 right-0 bg-zest-50 py-2 px-2 lg:hidden justify-evenly z-10 border-t-2 flex flex-col gap-5">
                 <div className='w-full flex flex-wrap gap-2 justify-between'>
@@ -247,7 +257,7 @@ const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
                     <button className="btn_styles-1 w-full text-sm" type="submit">Add to Cart</button>
                 </div>
             </div>
-        </form >
+        </motion.form >
     );
 };
 

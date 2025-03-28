@@ -133,7 +133,8 @@ const SearchPage: React.FC = () => {
                     </div>
                 </div>
             ) : (
-                <p className="text-red-400 font-bold">Error: {error}</p>
+                <p className="text-red-400 font-bold">Error: {error}
+                </p>
             )}
         </section>
     );

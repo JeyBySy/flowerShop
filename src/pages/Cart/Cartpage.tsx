@@ -1,18 +1,41 @@
 import React from 'react'
 import SampleImage from '../..//assets/flowers/sample.png'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './cart.css'
 import { useCart } from '../../context/CartContext'
+import { motion } from 'framer-motion'
 
 const Cartpage: React.FC = () => {
+    const navigate = useNavigate();
+    const { cart, selectedCarts, setSelectedCarts } = useCart();
+    const allSelected = selectedCarts.length === cart?.CartItems.length && selectedCarts.length > 0;
 
-    const { cart } = useCart()
+    const handleCheckboxChange = (id: string) => {
+        setSelectedCarts((prev) =>
+            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+        );
+    };
+
+    const handleCheckout = () => {
+        navigate('/checkout', { state: { selectedCarts } });
+    };
+
+    const handleSelectAll = () => {
+        if (allSelected) {
+            setSelectedCarts([]); // Unselect all
+        } else {
+            setSelectedCarts(cart?.CartItems.map((item) => item.id) || []);
+        }
+    };
     return (
-        <section className='bg-white mt-5 lg:w-[75%] md:w-full w-full p-5 rounded shadow mb-10'>
+        <motion.section
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className='bg-white mt-5 lg:w-[75%] md:w-full w-full p-5 rounded shadow mb-10'>
             <div className='flex flex-col gap-2 relative'>
                 <div className="flex flex-col">
-                    <h1 className="text-2xl font-semibold border-b-2 mb-2"> Orders </h1>
-
+                    <h1 className="text-2xl font-semibold border-b-2 mb-2"> Cart </h1>
                     <div className="overflow-x-auto">
                         <table className="w-full border-gray-300">
                             {/* Table Header */}
@@ -34,9 +57,14 @@ const Cartpage: React.FC = () => {
                                 {cart?.CartItems && cart.CartItems.length > 0 ? (
                                     cart.CartItems.map((item, index) => (
                                         <>
-                                            <tr key={index} data-id={item.Product?.id} className="hover:bg-gray-100 hover:cursor-pointer">
+                                            <tr key={index} data-id={item.id} className="hover:bg-gray-100 hover:cursor-pointer">
                                                 <td className="text-center py-10">
-                                                    <input type="checkbox" />
+                                                    <input
+                                                        type="checkbox"
+                                                        value={item.id}
+                                                        checked={selectedCarts.includes(item.id)}
+                                                        onChange={() => handleCheckboxChange(item.id)}
+                                                    />
                                                 </td>
                                                 <td className='py-5 px-2'>
                                                     <div className="flex items-center">
@@ -49,7 +77,7 @@ const Cartpage: React.FC = () => {
                                                     </div>
                                                 </td>
                                                 <td className="p-3">
-                                                    {Array.isArray(item?.variety)
+                                                    {/* {Array.isArray(item?.variety)
                                                         ? item.variety.map((v, i) => {
                                                             const parsedVariety = typeof v === "string" ? JSON.parse(v) : v;
                                                             return (
@@ -62,7 +90,7 @@ const Cartpage: React.FC = () => {
                                                             );
                                                         })
                                                         : <p className="text-gray-500 text-sm">No variety available</p>
-                                                    }
+                                                    } */}
                                                 </td>
                                                 <td className="text-center p-3 ">{item.quantity}</td>
                                                 <td className="text-center p-3 text-persian-rose-600">₱ {item.total}</td>
@@ -83,7 +111,7 @@ const Cartpage: React.FC = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td className="w-full text-center text-gray-500 py-3 border">
+                                        <td colSpan={8} className="w-full text-center text-gray-500 py-3 h-[300px] border">
                                             No items in the cart
                                         </td>
                                     </tr>
@@ -96,7 +124,12 @@ const Cartpage: React.FC = () => {
 
                 <div className='flex w-full bottom-0 border-t-2 px-4 py-5 items-center justify-center gap-2 bg-white'>
                     <div className='flex gap-2'>
-                        <input type="checkbox" name="" id="selectAllId" />
+                        <input
+                            type="checkbox"
+                            name=""
+                            id="selectAllId"
+                            checked={allSelected}
+                            onChange={handleSelectAll} />
                         <label htmlFor='selectAllId'> Select all</label>
                     </div>
                     <div className=' flex-grow flex items-center gap-2 justify-end'>
@@ -105,11 +138,13 @@ const Cartpage: React.FC = () => {
                         <p className='text-persian-rose-500 text-xl font-bold text-end'>₱1000.00</p>
                     </div>
                     <div className='flex-grow-0 border flex justify-end'>
-                        <Link to={'/checkout'} className="bg-avocado-600 p-2 rounded w-full px-10 text-white" type="submit">Checkout</Link>
+                        <button onClick={handleCheckout} disabled={selectedCarts.length === 0} className={`p-2 rounded w-full px-10 text-white ${selectedCarts.length === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-avocado-600"}`}>
+                            Checkout
+                        </button>
                     </div>
                 </div>
             </div >
-        </section >
+        </motion.section >
     )
 }
 

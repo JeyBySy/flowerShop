@@ -6,8 +6,8 @@ import { useAuth } from './AuthContext';
 interface CartContextType {
     cart: CartType | null;
     loading: boolean;
-    // addToCart: (product: ProductType) => void;
-    // removeFromCart: (id: string) => void;
+    selectedCarts: string[];
+    setSelectedCarts: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -16,14 +16,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { user } = useAuth();
     const [cart, setCart] = useState<CartType | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
 
     useEffect(() => {
         if (!user) {
             setLoading(false);
             return;
         }
-
-
         const loadCart = async () => {
             setLoading(true);
             try {
@@ -41,25 +40,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loadCart();
     }, [user]);
 
-    // const addToCart = async (product: ProductType) => {
-    //     try {
-    //         await addItemToCart({ productId: product.id, quantity: 1 });
-
-    //         setCart((prevCart) => [...prevCart, product]);
-    //     } catch (error) {
-    //         console.error("Error adding to cart:", error);
-    //     }
-    // };
-
-    // const removeFromCart = (id: string) => {
-    //     setCart((prevCart) => {
-    //         const updatedCart = prevCart.filter((item) => item.id !== id);
-    //         return updatedCart;
-    //     });
-    // };
-
     return (
-        <CartContext.Provider value={{ cart, loading }}>
+        <CartContext.Provider value={{ cart, loading, selectedCarts, setSelectedCarts }}>
             {children}
         </CartContext.Provider>
     );

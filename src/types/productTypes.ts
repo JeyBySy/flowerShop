@@ -15,6 +15,11 @@ export interface ProductRatingsType extends ProductRating {
     name: string
   }
 }
+export interface VarietyType {
+  id:string,
+  variety: string;
+  price: number;
+}
 
 export interface ProductType {
   id: string
@@ -26,7 +31,7 @@ export interface ProductType {
   stock: number
   categoryId:string
   subCategoryId:string
-  variety: string[]
+  variants: VarietyType[]
   ProductRatings: ProductRatingsType[]
   averageRating: string
   totalSell:number

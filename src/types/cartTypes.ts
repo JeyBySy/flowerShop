@@ -10,7 +10,7 @@ export interface CartItemType {
     id: string;
     cartId: string;
     productId: string;
-    variety: VarietyType[];
+    variants: VarietyType[];
     deliveryDate: string;
     deliveryTime: string;
     quantity: number;
@@ -21,8 +21,9 @@ export interface CartItemType {
 }
 
 export interface VarietyType {
-    name: string;
-    quantity: number;
+    id:string,
+    variety: string;
+    price: number;
 }
 
 export interface ProductType {

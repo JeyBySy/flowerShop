@@ -131,19 +131,20 @@ const Navbar = () => {
                         )}
                         <ShoppingCart width={"25px"} height={"20px"} />
                         {isCartHovered && (
-                            <div className="absolute top-full -left-28 min-h-fit bg-white border shadow-lg z-50 w-64 p-3 rounded-sm">
+                            <div className="absolute top-full -right-11 max-h-[400px] overflow-y-auto bg-white border shadow-lg z-50 w-[19rem] p-3 rounded-sm">
+                                <h3 className="text-sm font-semibold border-b pb-2">Cart Items</h3>
                                 {cartCount > 0 ? (
                                     <ul>
                                         {cart?.CartItems?.map((item) => (
                                             <li key={item.id} className="flex items-center gap-3 py-2 border-b last:border-none">
                                                 <img src={SampleImage} alt={SampleImage} className="w-10 h-10 object-cover rounded" />
                                                 <div className="text-xs w-full ">
-                                                    <p className="font-black text-start">{item.Product.name}</p>
-                                                    {Array.isArray(item?.variety)
-                                                        ? item.variety.map((v, i) => {
+                                                    <p className="font-black text-start text-gray-600">{item.Product.name}</p>
+                                                    {Array.isArray(item?.variants)
+                                                        ? item.variants.map((v, i) => {
                                                             const parsedVariety = typeof v === "string" ? JSON.parse(v) : v;
                                                             return (
-                                                                <div className={`grid grid-cols-4 text-center text-gray-500 py-1 text-xs ${i !== item.variety.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
+                                                                <div className={`grid grid-cols-4 text-center text-gray-500 py-1 text-xs ${i !== item.variants.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
                                                                     <p className='text-start'>{parsedVariety.name}</p>
                                                                     <span className='text-start text-persian-rose-600 justify-center items-center flex'>(₱{item.Product.price})</span>
                                                                     <p className='flex items-center justify-center w-full'>x</p>

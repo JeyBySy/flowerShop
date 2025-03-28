@@ -68,6 +68,8 @@ export const fetchCategories = async () => {
 export const fetchProductDetails = async (productId: string) => {
   try {
     const response = await apiService.get(`/product/${productId}`);
+    console.log(response.data);
+    
     return response.data;
   } catch (error) {
     console.error(`Error fetching details for product ${productId} service:`, error);
