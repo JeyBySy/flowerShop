@@ -50,7 +50,7 @@ export const fetchProducts = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching products service:', error);
-    throw error;
+    return null
   }
 };
 
@@ -60,20 +60,18 @@ export const fetchCategories = async () => {
         return response;
     } catch (error) {
         console.error('Error fetching categories service:', error);
-        throw error;
+        return null
     }
 };
 
 
 export const fetchProductDetails = async (productId: string) => {
   try {
-    const response = await apiService.get(`/product/${productId}`);
-    console.log(response.data);
-    
+    const response = await apiService.get(`/product/${productId}`);    
     return response.data;
   } catch (error) {
     console.error(`Error fetching details for product ${productId} service:`, error);
-    throw error;
+    return null
   }
 };
 
@@ -87,9 +85,10 @@ export const fetchUser = async (token:string) => {
       headers: { Authorization: `Bearer ${token}` },
     });    
     return response.data;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.error('Error fetching user data service:');
-    throw error;
+    // console.error('Error fetching user data service: ',error);
+    return null
   }
 };
 
@@ -98,8 +97,8 @@ export const fetchLogin = async (email:string,password:string) => {
     const response = await apiService.post('/auth/login',{ email, password });
     return response.data;
   } catch (error) {
-    console.error('Error while Login service');
-    throw error;
+    console.error('Error while Login service: ',error);
+    return null
   }
 };
 
@@ -118,7 +117,7 @@ export const fetchLogin = async (email:string,password:string) => {
     
 //   } catch (error) {
 //     console.error('Error fetching product base on category service');
-//     throw error;
+//     return null
 //   }
 // }
 
@@ -139,7 +138,7 @@ export const fetchSearchByCategory = async (categoryName: string, subCategoryNam
 
   } catch (error) {
     console.error('Error fetching product base on category service', error);
-    throw error;
+    return null
   }
 };
 
@@ -154,7 +153,7 @@ export const fetchCart = async () => {
     return cartResponse.data;
   } catch (error) {
     console.error("Error fetching cart based on customerId:", error);
-    throw error;
+    return null
   }
 };
 
@@ -173,7 +172,7 @@ export const addItemToCart = async (customerId: string, item: { productId: strin
     return response.data;
   } catch (error) {
     console.error("Error adding item to cart:", error);
-    throw error;
+    return null
   }
 };
 
