@@ -38,7 +38,13 @@ export interface ProductType {
   discount:number
 }
 
-export interface ProductProps {
+export interface ProductTypeProps {
+  success: boolean,
+  message: string,
+  data: ProductType,
+}
+
+export interface ProductFormProps {
   data: ProductType,
   addToCartEvent:()=>void
 }

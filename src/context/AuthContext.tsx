@@ -1,30 +1,7 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import axios from 'axios';
 import { fetchLogin, fetchUser } from '../services/apiService';  // Importing the fetchUser function
-
-// Define the User type
-interface User {
-    success: boolean;
-    userData: {
-        id: string;
-        first_name: string;
-        last_name: string;
-        email: string;
-        role: 'user' | 'admin';
-        isVerified: boolean;
-    }
-}
-
-// Define the AuthContext type
-interface AuthContextType {
-    user: User | null;
-    token: string | null;
-    loading: boolean;
-
-    login: (email: string, password: string) => Promise<void>;
-    register: (first_name: string, last_name: string, email: string, password: string) => Promise<void>;
-    logout: () => void;
-}
+import { AuthContextType, User } from '../types/AuthContextTypes';
 
 // Create the AuthContext with a default value of null
 const AuthContext = createContext<AuthContextType | null>(null);

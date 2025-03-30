@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import SampleImage from '../../assets/flowers/sample.png'
-import { ProductProps } from '../../types/productTypes'
+import { ProductFormProps } from '../../types/productTypes'
 import dayjs from 'dayjs'
 import { motion } from 'framer-motion';
 
-const ProductForm: React.FC<ProductProps> = ({ data, addToCartEvent }) => {
+const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
     const { id, name, price, stock, variants, averageRating, ProductRatings } = data;
     const currentTime = dayjs();
     const isPast4PM = currentTime.hour() >= 16; // 4:00 PM (16:00) cut-off

@@ -48,6 +48,7 @@ const Homepage: React.FC = () => {
                     </div>
 
                     <div className={cardStyle}>
+                        {/* Change here if display the products */}
                         {!loading ? (
                             <CardSkeleton cards={12} />  // Show skeletons while loading
                         ) : error ? (

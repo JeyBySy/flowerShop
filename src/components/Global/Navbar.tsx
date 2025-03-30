@@ -88,8 +88,8 @@ const Navbar = () => {
                         <>
                             <MenuSkeleton />
                         </>
-                    ) : error ? (
-                        <div>Error loading categories</div>
+                    ) : error && categories ? (
+                        <div>{error}</div>
                     ) : (
                         <>
                             {categories?.length > 0 ? (
@@ -115,7 +115,7 @@ const Navbar = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No categories found.</p>
+                                <p className="text-red-400">No categories found.</p>
                             )}
                         </>
                     )}

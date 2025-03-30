@@ -2,33 +2,6 @@ import { useState, useEffect } from 'react';
 import { fetchProducts } from '../services/apiService';
 import { ProductType } from "../types/productTypes"
 
-// type ProductRatingsType = {
-//     id: string;
-//     rating: number;
-//     review: string;
-//     userId: string;
-//     productId: string;
-//     createdAt: string;
-//     updatedAt: string;
-// };
-
-
-// type ProductType = {
-//     id: string;
-//     name: string;
-//     description: string;
-//     createdAt: string;
-//     updatedAt: string;
-//     price: number;
-//     stock: number;
-//     categoryid: string;
-//     subCategoryId: string;
-//     variety: object[];
-//     ProductRatings: ProductRatingsType[],
-//     averageRating: number
-
-// }
-
 export const useProducts = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [loading, setLoading] = useState(true);
@@ -38,8 +11,11 @@ export const useProducts = () => {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const response = await fetchProducts();
-                setProducts(response.data);
+                const productData = await fetchProducts();
+                if (productData && Array.isArray(productData.data)) {
+                    setProducts(productData?.data);
+
+                }
 
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (error) {

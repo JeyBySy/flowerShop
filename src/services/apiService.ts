@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { CategoryTypeProps } from '../types/categoryTypes';
+import { ProductTypeProps } from '../types/productTypes';
 
 const apiService = axios.create({
   baseURL: 'http://localhost:3000/api',
@@ -6,74 +8,21 @@ const apiService = axios.create({
   withCredentials: true,
 });
 
-// // Request interceptor (Attach Authorization Header)
-// apiService.interceptors.request.use(config => {
-//   const accessToken = localStorage.getItem('accessToken');
-//   if (accessToken) {
-//     config.headers.Authorization = `Bearer ${accessToken}`;
-//   }
-//   return config;
-// });
-
-// // Response interceptor (Handle token refresh)
-// apiService.interceptors.response.use(
-//   response => response, 
-//   async error => {
-//     const originalRequest = error.config;
-
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true; // Prevent infinite loop
-
-//       try {
-//         const { data } = await axios.post('http://localhost:3000/api/auth/refresh', {}, { withCredentials: true });
-//         localStorage.setItem('accessToken', data.accessToken); // Store new token
-
-//         apiService.defaults.headers.Authorization = `Bearer ${data.accessToken}`;
-//         return apiService(originalRequest); // Retry failed request with new token
-//       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//       } catch (refreshError) {
-//         console.error('Session expired. Please log in again.');
-//         localStorage.removeItem('accessToken');
-//         window.location.href = '/login'; // Redirect to login
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
-
-
-
-export const fetchProducts = async () => {
+const handleRequest = async <T>(request: Promise<{ data: T }>,functionName:string): Promise<T | null> => {
   try {
-    const response = await apiService.get('/product/complete');
+    const response = await request;  
     return response.data;
   } catch (error) {
-    console.error('Error fetching products service:', error);
-    return null
+    console.error(`API Error from ${functionName}:`, error);
+    return null;
   }
 };
 
-export const fetchCategories = async () => {
-    try {
-        const response = await apiService.get('/category/complete');               
-        return response;
-    } catch (error) {
-        console.error('Error fetching categories service:', error);
-        return null
-    }
-};
+export const fetchProducts = () => handleRequest<ProductTypeProps>(apiService.get("/product/complete"),'fetchProducts');
 
+export const fetchCategories = () => handleRequest<CategoryTypeProps>(apiService.get("/category/complete"),"fetchCategories");
 
-export const fetchProductDetails = async (productId: string) => {
-  try {
-    const response = await apiService.get(`/product/${productId}`);    
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching details for product ${productId} service:`, error);
-    return null
-  }
-};
+export const fetchProductDetails = (productId: string) => handleRequest<ProductTypeProps>(apiService.get(`/product/${productId}`), "fetchProductDetails");
 
 
 export const fetchUser = async (token:string) => {  

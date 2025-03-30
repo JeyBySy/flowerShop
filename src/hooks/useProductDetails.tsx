@@ -13,9 +13,10 @@ export const useProductDetails = (productId: string) => {
             try {
                 setLoading(true);
                 const productData = await fetchProductDetails(productId);
-                console.log("dsdadasdsd; ", productData);
+                if (productData?.success) {
+                    setProduct(productData?.data);
+                }
 
-                setProduct(productData.data);
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (error) {
                 setError('Failed to fetch product details.');
