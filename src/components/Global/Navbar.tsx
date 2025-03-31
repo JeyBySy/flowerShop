@@ -47,16 +47,13 @@ const Navbar = () => {
                     <div className="flex-1 text-center text-sm">
                         <div className="flex items-center gap-5 justify-end">
                             <div className="cursor-pointer"><Link to="/track-order">Track Order</Link></div>
-                            {user ? (
-                                <div onClick={logout} className="cursor-pointer">{user?.userData?.first_name} {user?.userData?.last_name}
-
-                                </div>
+                            {user?.success ? (
+                                <div onClick={logout} className="cursor-pointer">{user?.userData?.first_name} {user?.userData?.last_name}</div>
                             ) : (
                                 <>
                                     <div className="cursor-pointer"><Link to="/login">Login</Link></div>
                                     <div className="cursor-pointer"><Link to="/register">Register</Link></div>
                                 </>
-
                             )}
 
                         </div>
