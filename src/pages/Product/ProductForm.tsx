@@ -3,38 +3,24 @@ import SampleImage from '../../assets/flowers/sample.png'
 import { ProductFormProps } from '../../types/productTypes'
 import dayjs from 'dayjs'
 import { motion } from 'framer-motion';
+import { useDeliveryDateTime } from '../../hooks/useDeliveryDateTime';
 
 const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
     const { id, name, price, stock, variants, averageRating, ProductRatings } = data;
-    const currentTime = dayjs();
-    const isPast4PM = currentTime.hour() >= 16; // 4:00 PM (16:00) cut-off
-    const timeToStartExpressDelivery = 10
-    const today = dayjs().format("YYYY-MM-DD");
-    const tomorrow = dayjs().add(1, "day").format("YYYY-MM-DD");
-    const currentHour = dayjs().hour();
+    const {
+        selectedDate,
+        setSelectedDate,
+        selectedTime,
+        setSelectedTime,
+        availableSlots,
+        handleDateSelection,
+        isPast4PM,
+        today
+    } = useDeliveryDateTime();
 
     const [selectVariety, setSelectVariety] = useState<string>(variants[0]?.variety || "");
-    const [selectedDate, setSelectedDate] = useState(isPast4PM ? tomorrow : today);
-    const [selectedTime, setSelectedTime] = useState<string>("8:00 AM - 6:00 PM");
     const [quantityValue, setQuantityValue] = useState(1);
-
-    const timeSlots = [
-        { label: "Express Delivery", range: "Express", end: 24 },
-        { label: "Anytime", range: "8:00 AM - 6:00 PM", end: 14 },
-        { label: "Morning", range: "7:00 AM - 10:00 AM", end: 8 },
-        { label: "Noon", range: "10:00 AM - 1:00 PM", end: 11 },
-        { label: "Afternoon", range: "1:00 PM - 4:00 PM", end: 15 },
-        { label: "Evening", range: "4:00 PM - 8:00 PM", end: 18 },
-        { label: "Midnight", range: "8:00 PM - 11:00 PM", end: 21 }
-
-    ];
-
-    const deliveryFee = (100).toFixed(2)
-    let availableSlots = timeSlots.filter(slot => currentHour < slot.end); // Removing data in timeSlots base on the time past by    
-
-    if (currentHour >= timeToStartExpressDelivery && selectedDate !== dayjs().format("YYYY-MM-DD")) {
-        availableSlots = timeSlots.filter(slot => slot.range.toLowerCase() !== "express"); // Remove "Express" slot
-    }
+    const deliveryFee = (100).toFixed(2) // Temporary static value of delivery fee
 
     const totalSelectedProduct: number = parseFloat((Number(price) * quantityValue + (selectedTime == "Express" ? 100 : 0)).toFixed(2));
     const maxinputvalue: number = stock ? stock : 1;
@@ -56,11 +42,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
         if (!(quantityValue <= 1)) {
             setQuantityValue(quantityValue - 1);
         }
-    };
-
-    const handleDateSelection = (daysOffset: number) => {
-        const newDate = dayjs().add(daysOffset, "day").format("YYYY-MM-DD");
-        setSelectedDate(newDate);
     };
 
     const titleCategory: string = "w-full text-xs"
