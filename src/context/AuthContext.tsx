@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import axios from 'axios';
-import { fetchLogin, fetchUser } from '../services/apiService';  // Importing the fetchUser function
+import { fetchLogin, fetchRefreshToken, fetchUser } from '../services/apiService';  // Importing the fetchUser function
 import { AuthContextType, User } from '../types/AuthContextTypes';
 
 // Create the AuthContext with a default value of null
@@ -12,48 +12,42 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null>(localStorage.getItem('accessToken'));
-    const [loading, setLoading] = useState<boolean>(true);
-
+    const [authLoading, setAuthLoading] = useState<boolean>(true);
+    const [authError, setAuthError] = useState<string>("")
 
     useEffect(() => {
-        if (token) {
-            fetchUser(token)
-                .then((userData) => {
+        const fetchUserData = async () => {
+            try {
+                const userData = await fetchUser();
+                if (userData) {
                     setUser(userData);
-                    setLoading(false);
-                })
-                .catch(() => {
-                    setUser(null);
-                    setLoading(false);
-                });
-        } else {
-            setLoading(false);
-        }
-    }, [token]);
+                } else {
+                    // Try refreshing the token if the user is null
+                    await refreshToken();
+                    const retryUser = await fetchUser();
+                    setUser(retryUser);
+                }
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            } catch (error) {
+                setUser(null);
+            } finally {
+                setAuthLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
 
     const login = async (email: string, password: string) => {
         try {
-            const response = await fetchLogin(email, password);
+            await fetchLogin(email, password);
+            const userDetails = await fetchUser();
+            setUser(userDetails);
 
-            const { token } = response;
-            const response_userDetails = await fetchUser(token)
-            const { userData } = response_userDetails
-
-            localStorage.setItem('accessToken', token); // Ensure this is 'accessToken', not 'token'
-
-            setToken(token);
-            setUser(userData);
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                // AxiosError specific handling
-                console.error('Login failed:', error.response?.data?.message || error.message);
-                throw new Error(error.response?.data?.message);
-            }
-
-            // General error handling (for non-Axios errors)
-            console.error('Login failed:', (error as Error).message);
-            throw new Error('Login failed');
+        } catch (error) {
+            console.error("Login failed:", error);
+            throw new Error("Invalid email or password");
         }
     };
 
@@ -62,7 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const response = await axios.post('/api/auth/register', { first_name, last_name, email, password });
             const { token, user } = response.data;
             localStorage.setItem('accessToken', token); // Ensure this is 'accessToken', not 'token'
-            setToken(token);
+
             setUser(user);
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
@@ -77,14 +71,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
+    const refreshToken = async () => {
+        const res = await fetchRefreshToken()
+
+        if (!res?.success) {
+            setAuthError('"Session expired, please log in."')
+        }
+    };
+
     const logout = () => {
         localStorage.removeItem('accessToken');
-        setToken(null);
+
         setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, token, loading, login, register, logout }}>
+        <AuthContext.Provider value={{ user, authLoading, login, register, logout, authError }}>
             {children}
         </AuthContext.Provider>
     )
