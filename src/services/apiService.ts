@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { CategoryTypeProps } from '../types/categoryTypes';
 import { ProductTypeProps } from '../types/productTypes';
+import { AuthLoginProps } from '../types/AuthContextTypes';
+import { CartTypeProps } from '../types/cartTypes';
 
 const apiService = axios.create({
   baseURL: 'http://localhost:3000/api',
@@ -25,32 +27,21 @@ export const fetchCategories = () => handleRequest<CategoryTypeProps>(apiService
 export const fetchProductDetails = (productId: string) => handleRequest<ProductTypeProps>(apiService.get(`/product/${productId}`), "fetchProductDetails");
 
 
-export const fetchUser = async (token:string) => {  
-  if (!token) {
-    throw new Error('No token found. Please log in.');
-  }
+export const fetchUser = async () => {  
   try {
     const response = await apiService.get('/auth/user', {
-      headers: { Authorization: `Bearer ${token}` },
-    });    
+      withCredentials: true,      
+    });       
     return response.data;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    // console.error('Error fetching user data service: ',error);
-    return null
+    return null;
   }
 };
 
-export const fetchLogin = async (email:string,password:string) => {  
-  try {
-    const response = await apiService.post('/auth/login',{ email, password });
-    return response.data;
-  } catch (error) {
-    console.error('Error while Login service: ',error);
-    return null
-  }
-};
+export const fetchLogin = (email: string, password: string) => handleRequest<AuthLoginProps>(apiService.post("/auth/login", { email, password }), "fetchLogin");
 
+export const fetchRefreshToken = () =>  handleRequest<AuthLoginProps>( apiService.post("/auth/refresh", {}, { withCredentials: true }), "refreshToken");
 
 // export const fetchSearchByCategory = async(categoryName:string, subCategoryName:string)=>{
 //   try {
@@ -91,20 +82,7 @@ export const fetchSearchByCategory = async (categoryName: string, subCategoryNam
   }
 };
 
-export const fetchCart = async () => {
-  try {
-    const cartResponse = await apiService.get(`/cart/`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        "Content-Type": "application/json",
-      },
-    });
-    return cartResponse.data;
-  } catch (error) {
-    console.error("Error fetching cart based on customerId:", error);
-    return null
-  }
-};
+export const fetchCart = () => handleRequest<CartTypeProps>( apiService.get("/cart/", { withCredentials: true }), "fetchCart" );
 
 export const addItemToCart = async (customerId: string, item: { productId: string; quantity: number }) => {
   try {
