@@ -1,14 +1,7 @@
 import { fetchCart } from '../services/apiService';
-import { CartType } from '../types/cartTypes';
+import { CartType, CartContextType } from '../types/cartTypes';
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from './AuthContext';
-
-interface CartContextType {
-    cart: CartType | null;
-    loading: boolean;
-    selectedCarts: string[];
-    setSelectedCarts: React.Dispatch<React.SetStateAction<string[]>>;
-}
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -26,8 +19,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const loadCart = async () => {
             setLoading(true);
             try {
-                const { data } = await fetchCart();
-                setCart(data);
+                const cartResponse = await fetchCart();
+                console.log(cartResponse);
+
+                if (cartResponse?.success) {
+                    setCart(cartResponse?.data);
+                }
             } catch (error) {
                 console.error("Error loading cart:", error);
             } finally {
@@ -37,6 +34,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         loadCart();
     }, [user]);
+
+    // const addToCart = async (item: { productId: string; quantity: number }) => {
+    //     if (!user) return;
+    //     try {
+    //         const response = await addItemToCart(user.id, item);
+    //         if (response) {
+    //             setCart(response);
+    //         }
+    //     } catch (error) {
+    //         console.error("Error adding item to cart:", error);
+    //     }
+    // };
 
     return (
         <CartContext.Provider value={{ cart, loading, selectedCarts, setSelectedCarts }}>
