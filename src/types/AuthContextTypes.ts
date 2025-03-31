@@ -10,10 +10,16 @@ export interface User {
     }
 }
 
+export interface AuthLoginProps{
+    success: boolean;
+    token:string
+}
+
 export interface AuthContextType {
     user: User | null;
-    token: string | null;
-    loading: boolean;
+    authError:string;
+    // token: string;
+    authLoading: boolean;
     login: (email: string, password: string) => Promise<void>;
     register: (first_name: string, last_name: string, email: string, password: string) => Promise<void>;
     logout: () => void;

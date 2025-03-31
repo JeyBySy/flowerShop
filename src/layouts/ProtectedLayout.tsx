@@ -3,9 +3,9 @@ import { useAuth } from "../context/AuthContext";
 import { motion } from 'framer-motion'
 
 const ProtectedLayout = () => {
-    const { user, loading } = useAuth();
+    const { user, authLoading } = useAuth();
 
-    if (loading) {
+    if (authLoading) {
         return <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
