@@ -55,59 +55,58 @@ const Cartpage: React.FC = () => {
                             {/* Table Body */}
                             <tbody>
                                 {cart?.CartItems && cart.CartItems.length > 0 ? (
-                                    cart.CartItems.map((item, index) => (
-                                        <>
-                                            <tr key={index} data-id={item.id} className="hover:bg-gray-100 hover:cursor-pointer">
-                                                <td className="text-center py-10">
-                                                    <input
-                                                        type="checkbox"
-                                                        value={item.id}
-                                                        checked={selectedCarts.includes(item.id)}
-                                                        onChange={() => handleCheckboxChange(item.id)}
-                                                    />
-                                                </td>
-                                                <td className='py-5 px-2'>
-                                                    <div className="flex items-center">
-                                                        <div className="flex items-center justify-center w-[70px] h-[70px] shrink-0">
-                                                            <img src={SampleImage} alt="" className="w-full h-full object-contain" />
-                                                        </div>
-                                                        <p className="text-sm px-2 flex-grow">
-                                                            {item.Product?.name}
-                                                        </p>
+                                    cart?.CartItems.map((item, index) => (
+                                        <tr key={index} data-id={item.id} className="hover:bg-gray-100 hover:cursor-pointer" >
+                                            <td className="text-center py-10">
+                                                <input
+                                                    type="checkbox"
+                                                    value={item.id}
+                                                    checked={selectedCarts.includes(item.id)}
+                                                    onChange={() => handleCheckboxChange(item.id)}
+                                                />
+                                            </td>
+                                            <td className='py-5 px-2'>
+                                                <div className="flex items-center">
+                                                    <div className="flex items-center justify-center w-[70px] h-[70px] shrink-0">
+                                                        <img src={SampleImage} alt="" className="w-full h-full object-contain" />
                                                     </div>
-                                                </td>
-                                                <td className="p-3">
-                                                    {/* {Array.isArray(item?.variety)
-                                                        ? item.variety.map((v, i) => {
-                                                            const parsedVariety = typeof v === "string" ? JSON.parse(v) : v;
-                                                            return (
-                                                                <div className={`grid grid-cols-4 text-center text-sm text-gray-500 py-1 ${i !== item.variety.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
-                                                                    <p className='text-start'>{parsedVariety.name} </p>
-                                                                    <span className='text-start text-persian-rose-600'> (₱{item.Product.price})</span>
-                                                                    <p className='flex items-center justify-center'>x</p>
-                                                                    <p className="text-end text-persian-rose-600">{parsedVariety.quantity}</p>
-                                                                </div>
-                                                            );
-                                                        })
-                                                        : <p className="text-gray-500 text-sm">No variety available</p>
-                                                    } */}
-                                                </td>
-                                                <td className="text-center p-3 ">{item.quantity}</td>
-                                                <td className="text-center p-3 text-persian-rose-600">₱ {item.total}</td>
-                                                <td className="text-center p-3 ">
-                                                    <p className='w-full text-sm text-persian-rose-600'>{item.deliveryDate}</p>
-                                                </td>
-                                                <td className="text-center p-3 ">
-                                                    <p className=' w-full text-sm text-persian-rose-600'>{item.deliveryTime}</p>
-                                                </td>
-                                                <td className="text-center p-3 ">
-                                                    <div className="flex gap-2 justify-center">
-                                                        <button className="text-red-500">Delete</button>
-                                                        <button className="text-red-500">Delete</button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </>
+                                                    <p className="text-sm px-2 flex-grow">
+                                                        {item.Product?.name}
+                                                    </p>
+                                                </div>
+                                            </td>
+                                            <td className="p-3">
+                                                {Array.isArray(item?.variety) ? (
+                                                    item?.variety.map((v, i) => {
+                                                        const parsedVariety = typeof v === "string" ? JSON.parse(v) : v;
+                                                        return (
+                                                            <div className={`grid grid-cols-4 text-center text-sm text-gray-500 py-1 ${i !== item.variety.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
+                                                                <p className='text-start'>{parsedVariety.name} </p>
+                                                                <span className='text-start text-persian-rose-600'> (₱{parsedVariety.price})</span>
+                                                                <p className='flex items-center justify-center'>x</p>
+                                                                <p className="text-end text-persian-rose-600">{parsedVariety.quantity}</p>
+                                                            </div>
+                                                        );
+                                                    })
+                                                )
+                                                    : <p className="text-gray-500 text-sm">No variety available</p>
+                                                }
+                                            </td>
+                                            <td className="text-center p-3 ">{item.quantity}</td>
+                                            <td className="text-center p-3 text-persian-rose-600">₱ {item.total}</td>
+                                            <td className="text-center p-3 ">
+                                                <p className='w-full text-sm text-persian-rose-600'>{item.deliveryDate}</p>
+                                            </td>
+                                            <td className="text-center p-3 ">
+                                                <p className=' w-full text-sm text-persian-rose-600'>{item.deliveryTime}</p>
+                                            </td>
+                                            <td className="text-center p-3 ">
+                                                <div className="flex gap-2 justify-center">
+                                                    <button className="text-red-500">Delete</button>
+                                                    <button className="text-red-500">Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     ))
                                 ) : (
                                     <tr>
