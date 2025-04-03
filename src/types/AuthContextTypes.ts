@@ -5,7 +5,7 @@ export interface User {
         first_name: string;
         last_name: string;
         email: string;
-        role: 'user' | 'admin';
+        role: 'user' | 'admin' | 'guest';
         isVerified: boolean;
     }
 }
@@ -18,8 +18,7 @@ export interface AuthLoginProps{
 export interface AuthContextType {
     user: User | null;
     authError:string;
-    // token: string;
-    authLoading: boolean;
+    authLoading: boolean;    
     login: (email: string, password: string) => Promise<void>;
     register: (first_name: string, last_name: string, email: string, password: string) => Promise<void>;
     logout: () => void;

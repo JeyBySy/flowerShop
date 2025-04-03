@@ -1,4 +1,4 @@
-import { fetchCart } from '../services/apiService';
+import { fetchCart, fetchRemoveCartItem } from '../services/apiService';
 import { CartType, CartContextType } from '../types/cartTypes';
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from './AuthContext';
@@ -20,8 +20,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setLoading(true);
             try {
                 const cartResponse = await fetchCart();
-                console.log(cartResponse);
-
                 if (cartResponse?.success) {
                     setCart(cartResponse?.data);
                 }
@@ -47,8 +45,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     //     }
     // };
 
+    const removeCart = async (cartItemId: string) => {
+        if (!user) return;
+        try {
+            const response = await fetchRemoveCartItem(cartItemId);
+            if (response?.success) {
+                setCart((prevCart) => {
+                    if (!prevCart) return null;
+                    return {
+                        ...prevCart,
+                        CartItems: prevCart.CartItems.filter((item) => item.id !== cartItemId),
+                    };
+                });
+            }
+        } catch (error) {
+            console.error("Error adding item to cart:", error);
+        }
+    };
+
     return (
-        <CartContext.Provider value={{ cart, loading, selectedCarts, setSelectedCarts }}>
+        <CartContext.Provider value={{ cart, loading, selectedCarts, setSelectedCarts, removeCart }}>
             {children}
         </CartContext.Provider>
     );

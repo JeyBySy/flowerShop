@@ -4,6 +4,7 @@ export interface CartContextType {
     selectedCarts: string[];
     setSelectedCarts: React.Dispatch<React.SetStateAction<string[]>>;
     // addToCart: (item: CartItemType) => void;
+    removeCart:(cartItemId:string)=>void
 }
 
 export interface CartItemType {

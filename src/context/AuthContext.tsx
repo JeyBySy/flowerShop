@@ -1,7 +1,8 @@
 import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import axios from 'axios';
-import { fetchLogin, fetchRefreshToken, fetchUser } from '../services/apiService';  // Importing the fetchUser function
+import { fetchLogin, fetchLogout, fetchUser } from '../services/apiService';  // Importing the fetchUser function
 import { AuthContextType, User } from '../types/AuthContextTypes';
+import { useNavigate } from "react-router-dom";
 
 // Create the AuthContext with a default value of null
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -14,19 +15,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [authLoading, setAuthLoading] = useState<boolean>(true);
     const [authError, setAuthError] = useState<string>("")
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const userData = await fetchUser();
-                if (userData) {
+                if (userData?.success) {
                     setUser(userData);
-                } else {
-                    // Try refreshing the token if the user is null
-                    await refreshToken();
-                    const retryUser = await fetchUser();
-                    setUser(retryUser);
                 }
+
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (error) {
                 setUser(null);
@@ -71,18 +69,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
-    const refreshToken = async () => {
-        const res = await fetchRefreshToken()
-
-        if (!res?.success) {
-            setAuthError('"Session expired, please log in."')
+    const logout = async () => {
+        try {
+            const response = await fetchLogout();
+            if (response?.success) {
+                setUser(null); // Reset user state
+                localStorage.clear(); // Ensure all authentication data is removed
+                navigate("/login");
+            }
+        } catch (error) {
+            setAuthError("Logout failed. Please try again.");
+            console.error("Logout failed:", error);
         }
-    };
-
-    const logout = () => {
-        localStorage.removeItem('accessToken');
-
-        setUser(null);
     };
 
     return (

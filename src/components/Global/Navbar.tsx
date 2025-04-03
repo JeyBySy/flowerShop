@@ -10,7 +10,7 @@ import { fromKebabCase, toKebabCase } from "../../utils/formatSpaceString";
 import SampleImage from '../..//assets/flowers/sample.png'
 
 const Navbar = () => {
-    const { user, logout } = useAuth();
+    const { user, logout, authLoading } = useAuth();
     const navigate = useNavigate();
     const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
     const [isCartHovered, setIsCartHovered] = useState<boolean>(false);
@@ -36,6 +36,10 @@ const Navbar = () => {
         }
     };
 
+    const handleLogout = async () => {
+        await logout();
+    };
+
     return (
         <div className="border-b-2 bg-white">
             <div className="bg-brilliant-rose-500 text-white py-1">
@@ -47,12 +51,22 @@ const Navbar = () => {
                     <div className="flex-1 text-center text-sm">
                         <div className="flex items-center gap-5 justify-end">
                             <div className="cursor-pointer"><Link to="/track-order">Track Order</Link></div>
-                            {user?.success ? (
-                                <div onClick={logout} className="cursor-pointer">{user?.userData?.first_name} {user?.userData?.last_name}</div>
+                            {authLoading ? (
+                                <>
+                                    {/* Add spinner loading */}
+                                </>
                             ) : (
                                 <>
-                                    <div className="cursor-pointer"><Link to="/login">Login</Link></div>
-                                    <div className="cursor-pointer"><Link to="/register">Register</Link></div>
+                                    {user?.success && user?.userData?.role !== 'guest' ? (
+                                        <div onClick={() => handleLogout()} className="cursor-pointer">
+                                            {user?.userData?.first_name} {user?.userData?.last_name}
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="cursor-pointer"><Link to="/login">Login</Link></div>
+                                            <div className="cursor-pointer"><Link to="/register">Register</Link></div>
+                                        </>
+                                    )}
                                 </>
                             )}
 
@@ -137,11 +151,11 @@ const Navbar = () => {
                                                 <img src={SampleImage} alt={SampleImage} className="w-10 h-10 object-cover rounded" />
                                                 <div className="text-xs w-full ">
                                                     <p className="font-black text-start text-gray-600">{item.Product.name}</p>
-                                                    {Array.isArray(item?.variants)
-                                                        ? item.variants.map((v, i) => {
+                                                    {Array.isArray(item?.variety)
+                                                        ? item.variety.map((v, i) => {
                                                             const parsedVariety = typeof v === "string" ? JSON.parse(v) : v;
                                                             return (
-                                                                <div className={`grid grid-cols-4 text-center text-gray-500 py-1 text-xs ${i !== item.variants.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
+                                                                <div className={`grid grid-cols-4 text-center text-gray-500 py-1 text-xs ${i !== item.variety.length - 1 ? 'border-b border-gray-300' : ''}`} key={i}>
                                                                     <p className='text-start'>{parsedVariety.name}</p>
                                                                     <span className='text-start text-persian-rose-600 justify-center items-center flex'>(₱{item.Product.price})</span>
                                                                     <p className='flex items-center justify-center w-full'>x</p>

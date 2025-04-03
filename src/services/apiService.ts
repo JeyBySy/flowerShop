@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CategoryTypeProps } from '../types/categoryTypes';
 import { ProductTypeProps } from '../types/productTypes';
-import { AuthLoginProps } from '../types/AuthContextTypes';
+import { AuthLoginProps,User } from '../types/AuthContextTypes';
 import { CartTypeProps } from '../types/cartTypes';
 
 const apiService = axios.create({
@@ -14,34 +14,12 @@ const handleRequest = async <T>(request: Promise<{ data: T }>,functionName:strin
   try {
     const response = await request;  
     return response.data;
+    
   } catch (error) {
     console.error(`API Error from ${functionName}:`, error);
     return null;
   }
 };
-
-export const fetchProducts = () => handleRequest<ProductTypeProps>(apiService.get("/product/complete"),'fetchProducts');
-
-export const fetchCategories = () => handleRequest<CategoryTypeProps>(apiService.get("/category/complete"),"fetchCategories");
-
-export const fetchProductDetails = (productId: string) => handleRequest<ProductTypeProps>(apiService.get(`/product/${productId}`), "fetchProductDetails");
-
-
-export const fetchUser = async () => {  
-  try {
-    const response = await apiService.get('/auth/user', {
-      withCredentials: true,      
-    });       
-    return response.data;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    return null;
-  }
-};
-
-export const fetchLogin = (email: string, password: string) => handleRequest<AuthLoginProps>(apiService.post("/auth/login", { email, password }), "fetchLogin");
-
-export const fetchRefreshToken = () =>  handleRequest<AuthLoginProps>( apiService.post("/auth/refresh", {}, { withCredentials: true }), "refreshToken");
 
 // export const fetchSearchByCategory = async(categoryName:string, subCategoryName:string)=>{
 //   try {
@@ -84,7 +62,7 @@ export const fetchSearchByCategory = async (categoryName: string, subCategoryNam
 
 export const fetchCart = () => handleRequest<CartTypeProps>( apiService.get("/cart/", { withCredentials: true }), "fetchCart" );
 
-export const addItemToCart = async (customerId: string, item: { productId: string; quantity: number }) => {
+export const fetchAddItemToCart = async (customerId: string, item: { productId: string; quantity: number }) => {
   try {
     const response = await apiService.post(
       `/cart/${customerId}/add`,
@@ -102,6 +80,35 @@ export const addItemToCart = async (customerId: string, item: { productId: strin
     return null
   }
 };
+
+export const fetchRemoveCartItem = async (cartItemId:string)=>{
+  try {
+    const response = await apiService.delete(`/cart/items/${cartItemId}`,{
+      withCredentials: true,      
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error remove cart item:", error);
+    return null
+  }
+
+}
+
+export const fetchProducts = () => handleRequest<ProductTypeProps>(apiService.get("/product/complete"),'fetchProducts');
+
+export const fetchCategories = () => handleRequest<CategoryTypeProps>(apiService.get("/category/complete"),"fetchCategories");
+
+export const fetchProductDetails = (productId: string) => handleRequest<ProductTypeProps>(apiService.get(`/product/${productId}`), "fetchProductDetails");
+
+export const fetchUser = () => handleRequest<User>(apiService.get('/auth/user', {withCredentials: true,}), "fetchUser")
+
+export const fetchLogin = (email: string, password: string) => handleRequest<AuthLoginProps>(apiService.post("/auth/login", { email, password }), "fetchLogin");
+
+export const fetchLogout = () =>  handleRequest<AuthLoginProps>(apiService.post("/auth/logout", {}, { withCredentials: true }),"fetchLogout");
+
+export const fetchRefreshToken = () =>  handleRequest<AuthLoginProps>( apiService.post("/auth/refresh", {}, { withCredentials: true }), "refreshToken");
+
+
 
 
 export default apiService;
