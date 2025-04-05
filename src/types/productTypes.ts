@@ -46,5 +46,11 @@ export interface ProductTypeProps {
 
 export interface ProductFormProps {
   data: ProductType,
-  addToCartEvent:()=>void
+  addToCartEvent: (payload: {
+    cartId: string;
+    productId: string;
+    variety: { variantId: string; name: string; quantity: number; price: number }[];
+    deliveryDate: string;
+    deliveryTime: string;
+  }) => void;
 }

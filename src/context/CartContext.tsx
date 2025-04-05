@@ -1,5 +1,5 @@
-import { fetchCart, fetchRemoveCartItem } from '../services/apiService';
-import { CartType, CartContextType } from '../types/cartTypes';
+import { fetchAddCartItem, fetchCart, fetchRemoveCartItem } from '../services/apiService';
+import { CartType, CartContextType, CartAddItemType } from '../types/cartTypes';
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from './AuthContext';
 
@@ -8,16 +8,17 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user } = useAuth();
     const [cart, setCart] = useState<CartType | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loadingCart, setLoadingCart] = useState<boolean>(true);
     const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
+    const [cartUpdated, setCartUpdated] = useState(false);
 
     useEffect(() => {
         if (!user) {
-            setLoading(false);
+            setLoadingCart(false);
             return;
         }
         const loadCart = async () => {
-            setLoading(true);
+            setLoadingCart(true);
             try {
                 const cartResponse = await fetchCart();
                 if (cartResponse?.success) {
@@ -26,24 +27,39 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             } catch (error) {
                 console.error("Error loading cart:", error);
             } finally {
-                setLoading(false);
+                setLoadingCart(false);
             }
         };
 
         loadCart();
-    }, [user]);
+    }, [user, cartUpdated]);
 
-    // const addToCart = async (item: { productId: string; quantity: number }) => {
-    //     if (!user) return;
-    //     try {
-    //         const response = await addItemToCart(user.id, item);
-    //         if (response) {
-    //             setCart(response);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error adding item to cart:", error);
-    //     }
-    // };
+    const addToCart = async ({
+        cartId,
+        productId,
+        variety,
+        deliveryDate,
+        deliveryTime,
+    }: CartAddItemType) => {
+        if (!user) return;
+
+        try {
+            const response = await fetchAddCartItem({
+                cartId,
+                productId,
+                variety,
+                deliveryDate,
+                deliveryTime
+            });
+
+            if (response?.success) {
+                setCartUpdated(prev => !prev);
+            }
+
+        } catch (error) {
+            console.error("Error cart context: adding item to cart:", error);
+        }
+    };
 
     const removeCart = async (cartItemId: string) => {
         if (!user) return;
@@ -54,7 +70,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     if (!prevCart) return null;
                     return {
                         ...prevCart,
-                        CartItems: prevCart.CartItems.filter((item) => item.id !== cartItemId),
+                        CartItems: prevCart.CartItems?.filter((item) => item.id !== cartItemId),
                     };
                 });
             }
@@ -64,7 +80,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     return (
-        <CartContext.Provider value={{ cart, loading, selectedCarts, setSelectedCarts, removeCart }}>
+        <CartContext.Provider value={{ cart, loadingCart, selectedCarts, setSelectedCarts, removeCart, addToCart }}>
             {children}
         </CartContext.Provider>
     );

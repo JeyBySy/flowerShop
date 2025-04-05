@@ -4,6 +4,7 @@ import { ProductFormProps } from '../../types/productTypes'
 import dayjs from 'dayjs'
 import { motion } from 'framer-motion';
 import { useDeliveryDateTime } from '../../hooks/useDeliveryDateTime';
+import { useCart } from '../../context/CartContext';
 
 const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
     const { id, name, price, stock, variants, averageRating, ProductRatings } = data;
@@ -17,6 +18,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
         isPast4PM,
         today
     } = useDeliveryDateTime();
+    const { cart } = useCart()
 
     const [selectVariety, setSelectVariety] = useState<string>(variants[0]?.variety || "");
     const [quantityValue, setQuantityValue] = useState(1);
@@ -44,15 +46,32 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
         }
     };
 
+    const handleAddToCart = () => {
+        const cartPayload = {
+            cartId: String(cart?.id),
+            productId: id,
+            variety: [{ variantId: id, name: selectVariety, quantity: quantityValue, price: totalSelectedProduct }],
+            deliveryDate: selectedDate,
+            deliveryTime: selectedTime
+        };
+        try {
+            addToCartEvent(cartPayload);
+            // You can show a success notification or update UI here
+        } catch (error) {
+            // Handle error (e.g., show an error message)
+            console.error("Failed to add item to cart:", error);
+        }
+    };
+
     const titleCategory: string = "w-full text-xs"
     const valueCategory: string = "w-full text-sm text-end text-persian-rose-500"
 
     return (
-        <motion.form
+        <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded" data-id={id}>
+            className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded">
             <div className="flex flex-col md:flex-row border-b-2 border-slate-200">
                 <h1 className="w-[80%] text-2xl capitalize font-bold text-persian-rose-500">{name}</h1>
                 <div className="w-[20%] flex gap-2 mt-2 md:mt-0">
@@ -101,11 +120,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
                         </svg>
                     </button>
                     <input
+                        inputMode='numeric'
                         value={quantityValue}
                         onChange={handleNumberInputValue}
                         type="text"
                         id="quantity-input"
-                        className="border-x-0 border-gray-300 h-11 text-center text-sm block w-full py-2.5 focus:outline-none pointer-events-none"
+                        className="border-x-0 border-gray-300 h-11 text-center text-sm block w-full py-2.5 focus:outline-none"
                         placeholder="999"
                         required
                     />
@@ -219,7 +239,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
             </div>
             {/* Submit Buttons */}
             <div className="hidden lg:flex gap-1 justify-end">
-                <button className="btn_styles-1 w-full" onClick={addToCartEvent}>Add to Cart</button>
+                <button className="btn_styles-1 w-full" onClick={handleAddToCart}>Add to Cart</button>
                 <button className="btn_styles-2 w-full">Buy Now</button>
             </div>
 
@@ -238,7 +258,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
                     <button className="btn_styles-1 w-full text-sm" type="submit">Add to Cart</button>
                 </div>
             </div>
-        </motion.form >
+        </motion.div >
     );
 };
 

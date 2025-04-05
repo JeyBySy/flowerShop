@@ -1,10 +1,23 @@
 export interface CartContextType {
     cart: CartType | null;
-    loading: boolean;
+    loadingCart: boolean;
     selectedCarts: string[];
     setSelectedCarts: React.Dispatch<React.SetStateAction<string[]>>;
-    // addToCart: (item: CartItemType) => void;
+    addToCart: (payload: CartAddItemType) => void;
     removeCart:(cartItemId:string)=>void
+}
+export interface CartAddItemType{
+    cartId: string; 
+    productId: string;  
+    variety: VarietyType[]; 
+    deliveryDate: string; 
+    deliveryTime: string;
+}
+
+export interface CartAddItemProps{
+    success: boolean,
+    message: string
+    data: CartItemType,
 }
 
 export interface CartItemType {
@@ -47,3 +60,4 @@ export interface CartTypeProps{
     message: string
     data: CartType,
 }
+

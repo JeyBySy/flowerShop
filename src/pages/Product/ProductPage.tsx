@@ -1,40 +1,41 @@
 import DescriptionRating from "../../components/Product/DescriptionRating"
 import ImageCarousel from "../../components/Product/ImageCarousel"
 import { useAuth } from "../../context/AuthContext";
-// import { useCart } from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import { useProductDetails } from "../../hooks/useProductDetails";
+import { CartAddItemType } from "../../types/cartTypes";
+// import { CartAddItemType } from "../../types/cartTypes";
 import ProductForm from "./ProductForm"
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+
 
 
 const ProductPage: React.FC = () => {
     const { id } = useParams<{ id: string; }>();
     const { user } = useAuth();
-    // const { addToCart } = useCart();
+    const { addToCart, cart, } = useCart();
     const navigate = useNavigate();
     const location = useLocation();
 
     const { product, loading, error } = useProductDetails(id || "");
 
-    if (loading) {
-        // return <div>Loading product details...</div>;
-        return <></>;
-    }
+    if (loading) return <div className="text-center text-gray-500">Loading...</div>;
+    if (error) return <div>{error}</div>;
 
-    if (error) {
-        return <div>{error}</div>;
-    }
-
-    const handleAddToCart = () => {
-        if (!user) {
-            // If not logged in, redirect to the login page
+    const handleAddToCart = (cartPayload: CartAddItemType) => {
+        if (!user || user?.userData.role === "guest") {
             navigate('/login', { state: { from: location.pathname } });
-        } else if (product) {
-            // Ensure product is not null before adding to cart
-            // addToCart(product);
+        }
+
+        if (!cart?.id) return // Handle cart ID is not available
+
+        try {
+            addToCart(cartPayload);
+
+        } catch (err) {
+            console.error("Failed to add item to cart:", err);
         }
     };
-
 
     return (
         <section className="flex mb-20 lg:mb-0 flex-col gap-5 overflow-hidden">
@@ -48,13 +49,23 @@ const ProductPage: React.FC = () => {
                         averageRating={parseFloat(product?.averageRating ?? '0')}
                     />
                 </div>
-                {product && <ProductForm data={product} addToCartEvent={handleAddToCart} />}
+                {product ? (
+                    <ProductForm data={product} addToCartEvent={handleAddToCart} />
+                ) : (
+                    <div className="text-red-500">Product not found</div>
+                )}
             </div>
+
+
             {/* Mobile sequence components */}
             <div className="lg:hidden sm:flex flex-col">
                 <div className="flex flex-col gap-4">
                     <ImageCarousel />
-                    {product && <ProductForm data={product} addToCartEvent={handleAddToCart} />}
+                    {product ? (
+                        <ProductForm data={product} addToCartEvent={handleAddToCart} />
+                    ) : (
+                        <div className="text-red-500">Product not found</div>
+                    )}
                 </div>
                 <DescriptionRating
                     description={product?.description || null}

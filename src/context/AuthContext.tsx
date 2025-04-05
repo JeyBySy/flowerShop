@@ -21,7 +21,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const fetchUserData = async () => {
             try {
                 const userData = await fetchUser();
-                if (userData?.success) {
+                if (userData?.success && userData?.userData?.role !== "guest") {
                     setUser(userData);
                 }
 
