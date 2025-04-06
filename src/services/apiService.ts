@@ -6,9 +6,10 @@ import { CartAddItemProps, CartAddItemType, CartTypeProps } from '../types/cartT
 
 const apiService = axios.create({
   baseURL: 'http://localhost:3000/api',
-  timeout: 100000, 
+  timeout: 10000, 
   withCredentials: true,
 });
+
 
 const handleRequest = async <T>(request: Promise<{ data: T }>, functionName: string): Promise<T | null> => {
   try {
@@ -63,19 +64,7 @@ export const fetchAddCartItem = ({
   
   return handleRequest<CartAddItemProps>( apiService.post("/cart/item/add",payload, { withCredentials: true }), "fetchAddCartItem")
 }
-
-export const fetchRemoveCartItem = async (cartItemId:string)=>{
-  try {
-    const response = await apiService.delete(`/cart/items/${cartItemId}`,{
-      withCredentials: true,      
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error remove cart item:", error);
-    return null
-  }
-
-}
+export const fetchRemoveCartItem = (cartItemId:string)=> handleRequest(apiService.delete(`/cart/items/${cartItemId}`,{withCredentials: true},), "fetchRemoveCartItem");
 
 // Product
 export const fetchProducts = () => handleRequest<ProductTypeProps>(apiService.get("/product/complete"),'fetchProducts');
@@ -92,7 +81,7 @@ export const fetchLogin = (email: string, password: string) => handleRequest<Aut
 
 export const fetchLogout = () =>  handleRequest<AuthLoginProps>(apiService.post("/auth/logout", {}, { withCredentials: true }),"fetchLogout");
 
-export const fetchRefreshToken = () =>  handleRequest<AuthLoginProps>( apiService.post("/auth/refresh", {}, { withCredentials: true }), "refreshToken");
+export const fetchRefreshToken = () =>  handleRequest<AuthLoginProps>( apiService.post("/auth/refresh", { withCredentials: true }), "refreshToken");
 
 // Search
 export const fetchSearchByCategory = async (categoryName: string, subCategoryName: string, sortItems:string, limit:number,page:number) => {

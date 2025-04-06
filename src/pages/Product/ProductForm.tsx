@@ -45,6 +45,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
             setQuantityValue(quantityValue - 1);
         }
     };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Handle form submission for 'Buy Now'
+    };
 
     const handleAddToCart = () => {
         const cartPayload = {
@@ -56,9 +60,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
         };
         try {
             addToCartEvent(cartPayload);
-            // You can show a success notification or update UI here
+            // Success notification or update UI here
         } catch (error) {
-            // Handle error (e.g., show an error message)
             console.error("Failed to add item to cart:", error);
         }
     };
@@ -67,10 +70,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
     const valueCategory: string = "w-full text-sm text-end text-persian-rose-500"
 
     return (
-        <motion.div
+        <motion.form
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
+            onSubmit={handleSubmit}
             className="w-full h-fit p-5 flex flex-col gap-5 bg-white rounded">
             <div className="flex flex-col md:flex-row border-b-2 border-slate-200">
                 <h1 className="w-[80%] text-2xl capitalize font-bold text-persian-rose-500">{name}</h1>
@@ -239,8 +243,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
             </div>
             {/* Submit Buttons */}
             <div className="hidden lg:flex gap-1 justify-end">
-                <button className="btn_styles-1 w-full" onClick={handleAddToCart}>Add to Cart</button>
                 <button className="btn_styles-2 w-full">Buy Now</button>
+                <button className="btn_styles-1 w-full" onClick={handleAddToCart}>Add to Cart</button>
             </div>
 
             {/* Note/Warning customer's future orders */}
@@ -253,12 +257,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
                     <p className='text-start text-persian-rose-500 text-sm uppercase '>Total: </p>
                     <p className='text-persian-rose-500 lg:text-base text-base font-bold text-end'>₱{totalSelectedProduct}</p>
                 </div>
-                <div className='w-full flex  gap-2'>
+                <div className='w-full flex gap-2'>
                     <button className="btn_styles-2 w-full text-sm">Buy Now</button>
-                    <button className="btn_styles-1 w-full text-sm" type="submit">Add to Cart</button>
+                    <button className="btn_styles-1 w-full text-sm" onClick={handleAddToCart}>Add to Cart</button>
                 </div>
             </div>
-        </motion.div >
+        </motion.form >
     );
 };
 

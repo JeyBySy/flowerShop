@@ -8,8 +8,6 @@ import { CartAddItemType } from "../../types/cartTypes";
 import ProductForm from "./ProductForm"
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
-
-
 const ProductPage: React.FC = () => {
     const { id } = useParams<{ id: string; }>();
     const { user } = useAuth();
@@ -42,7 +40,6 @@ const ProductPage: React.FC = () => {
             <div className="grid-cols-1 lg:grid-cols-2 gap-4 hidden lg:grid">
                 <div className="flex flex-col gap-4">
                     <ImageCarousel />
-                    {/* {JSON.stringify(product)} */}
                     <DescriptionRating
                         description={product?.description || null}
                         productRatings={product?.ProductRatings || []}
