@@ -3,6 +3,7 @@ import { CategoryTypeProps } from '../types/categoryTypes';
 import { ProductTypeProps } from '../types/productTypes';
 import { AuthLoginProps,User } from '../types/AuthContextTypes';
 import { CartAddItemProps, CartAddItemType, CartTypeProps } from '../types/cartTypes';
+import { CheckoutTypeProps } from '../types/checkoutTypes';
 
 const apiService = axios.create({
   baseURL: 'http://localhost:3000/api',
@@ -64,7 +65,11 @@ export const fetchAddCartItem = ({
   
   return handleRequest<CartAddItemProps>( apiService.post("/cart/item/add",payload, { withCredentials: true }), "fetchAddCartItem")
 }
-export const fetchRemoveCartItem = (cartItemId:string)=> handleRequest(apiService.delete(`/cart/items/${cartItemId}`,{withCredentials: true},), "fetchRemoveCartItem");
+export const fetchRemoveCartItem = (cartItemId:string)=> handleRequest<CartTypeProps>(apiService.delete(`/cart/items/${cartItemId}`,{withCredentials: true},), "fetchRemoveCartItem");
+
+
+// Checkout
+export const fetchCheckout = (cartId:string,cartItemIds:string[]) => handleRequest<CheckoutTypeProps>(apiService.post("/cart/checkout", { cartId,cartItemIds }, { withCredentials: true }), "fetchCheckout");
 
 // Product
 export const fetchProducts = () => handleRequest<ProductTypeProps>(apiService.get("/product/complete"),'fetchProducts');
