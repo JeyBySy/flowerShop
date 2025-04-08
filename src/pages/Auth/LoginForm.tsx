@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './auth.css'
 import { User } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
+import { useToast } from '../../hooks/useToast';
 
 
 const LoginForm: React.FC = () => {
     const { login } = useAuth();
+    const { addToast } = useToast(); // 🔥 use toast hook
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -19,9 +21,19 @@ const LoginForm: React.FC = () => {
         setErrorMessage(''); // Clear previous errors
         try {
             await login(email, password);
+
+            addToast({
+                message: 'Logged in successfully!',
+                type: 'success'
+            });
+
             navigate(location.state?.from || "/", { replace: true });
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
+            addToast({
+                message: 'Login failed. Please check your credentials.',
+                type: 'error'
+            });
             setErrorMessage('Invalid email or password. Please try again.');
         }
     };

@@ -1,7 +1,7 @@
 import DescriptionRating from "../../components/Product/DescriptionRating"
 import ImageCarousel from "../../components/Product/ImageCarousel"
-import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext";
+import { useAuth } from '../../hooks/useAuth'
+import { useCart } from '../../hooks/useCart'
 import { useProductDetails } from "../../hooks/useProductDetails";
 import { CartAddItemType } from "../../types/cartTypes";
 // import { CartAddItemType } from "../../types/cartTypes";

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { CheckoutCartItemType } from '../types/checkoutTypes';
 import { fetchCheckout } from '../services/apiService';
-import { useCart } from '../context/CartContext';
+import { useCart } from './useCart';
 
 const useCheckout = (cartItemIds: string[]) => {
     const { cart } = useCart()

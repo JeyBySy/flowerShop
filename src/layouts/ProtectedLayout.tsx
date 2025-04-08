@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import { motion } from 'framer-motion'
+import { useAuth } from "../hooks/useAuth";
 
 const ProtectedLayout = () => {
     const { user, authLoading } = useAuth();

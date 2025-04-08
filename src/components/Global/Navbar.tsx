@@ -4,13 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import ShopHeader from "./ShopHeader";
 import MenuSkeleton from "./Skeleton/MenuSkeleton";
 import { useCategories } from '../../hooks/useCategories';
-import { useCart } from "../../context/CartContext";
-import { useAuth } from "../../context/AuthContext";
 import { fromKebabCase, toKebabCase } from "../../utils/formatSpaceString";
 import SampleImage from '../..//assets/flowers/sample.png'
+import { useCart } from "../../hooks/useCart";
+import { useAuth } from "../../hooks/useAuth";
+import { useToast } from "../../hooks/useToast";
 
 const Navbar = () => {
     const { user, logout, authLoading } = useAuth();
+    const { addToast } = useToast()
     const navigate = useNavigate();
     const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
     const [isCartHovered, setIsCartHovered] = useState<boolean>(false);
@@ -38,6 +40,11 @@ const Navbar = () => {
 
     const handleLogout = async () => {
         await logout();
+        addToast({
+            message: "Logout Successfully",
+            type: "success"
+        })
+
     };
 
     return (

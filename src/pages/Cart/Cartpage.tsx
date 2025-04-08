@@ -2,8 +2,8 @@ import React from 'react'
 import SampleImage from '../..//assets/flowers/sample.png'
 import { useNavigate } from 'react-router-dom'
 import './cart.css'
-import { useCart } from '../../context/CartContext'
 import { motion } from 'framer-motion'
+import { useCart } from '../../hooks/useCart'
 
 const Cartpage: React.FC = () => {
     const navigate = useNavigate();
