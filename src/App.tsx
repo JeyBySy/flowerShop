@@ -14,38 +14,43 @@ import Checkoutpage from './pages/Checkoutpage';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import ProtectedLayout from './layouts/ProtectedLayout';
+import { ToastProvider } from './context/ToastContext';
+import ToastContainer from './components/Global/ToastContainer';
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route index element={<Homepage />} />
+    <ToastProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route index element={<Homepage />} />
 
-            {/* Required authentication */}
-            <Route element={<ProtectedLayout />}>
-              <Route path="/cart" element={<Cartpage />} />
-              <Route path="/checkout" element={<Checkoutpage />} />
+              {/* Required authentication */}
+              <Route element={<ProtectedLayout />}>
+                <Route path="/cart" element={<Cartpage />} />
+                <Route path="/checkout" element={<Checkoutpage />} />
+              </Route>
+
+              <Route path="/track-order" element={<TrackOrderpage />} />
+              <Route path="/search" element={<Searchpage />} />
+              <Route path="/search/:categoryName/:subCategoryName" element={<Searchpage />} />
+
+              <Route path="/product/:id/:item" element={<ProductPage />} />
+              <Route path="/page-not-found" element={<ErrorPage />} />
+              <Route path="*" element={<ErrorPage />} />
             </Route>
 
-            <Route path="/track-order" element={<TrackOrderpage />} />
-            <Route path="/search" element={<Searchpage />} />
-            <Route path="/search/:categoryName/:subCategoryName" element={<Searchpage />} />
-
-            <Route path="/product/:id/:item" element={<ProductPage />} />
-            <Route path="/page-not-found" element={<ErrorPage />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
-
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Loginpage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/forget-password" element={<Forgetpage />} />
-          </Route>
-        </Routes>
-      </CartProvider>
-    </AuthProvider>
+            <Route element={<AuthLayout />}>
+              <Route path="/login" element={<Loginpage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forget-password" element={<Forgetpage />} />
+            </Route>
+          </Routes>
+          <ToastContainer />
+        </CartProvider>
+      </AuthProvider>
+    </ToastProvider>
   );
 };
 
