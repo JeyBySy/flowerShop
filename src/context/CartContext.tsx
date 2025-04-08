@@ -1,7 +1,8 @@
+import { useAuth } from '../hooks/useAuth';
 import { fetchAddCartItem, fetchCart, fetchRemoveCartItem } from '../services/apiService';
 import { CartType, CartContextType, CartAddItemType } from '../types/cartTypes';
-import { createContext, useContext, useEffect, useState } from "react";
-import { useAuth } from './AuthContext';
+import { createContext, useEffect, useState } from "react";
+
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -86,9 +87,4 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const useCart = () => {
-    const context = useContext(CartContext);
-    if (!context) throw new Error("useCart must be used within a CartProvider");
-    return context;
-};
+export { CartContext }
