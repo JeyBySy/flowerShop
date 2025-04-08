@@ -4,10 +4,12 @@ import { ProductFormProps } from '../../types/productTypes'
 import dayjs from 'dayjs'
 import { motion } from 'framer-motion';
 import { useDeliveryDateTime } from '../../hooks/useDeliveryDateTime';
-import { useCart } from '../../context/CartContext';
+import { useCart } from '../../hooks/useCart'
+import { useToast } from '../../hooks/useToast';
 
 const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
     const { id, name, price, stock, variants, averageRating, ProductRatings } = data;
+    const { addToast } = useToast()
     const {
         selectedDate,
         setSelectedDate,
@@ -15,7 +17,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
         setSelectedTime,
         availableSlots,
         handleDateSelection,
-        isPast4PM,
+        isPast6PM,
         today
     } = useDeliveryDateTime();
     const { cart } = useCart()
@@ -60,7 +62,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
         };
         try {
             addToCartEvent(cartPayload);
-            // Success notification or update UI here
+            addToast({
+                message: `Add to cart successfully`,
+                type: "success"
+            })
         } catch (error) {
             console.error("Failed to add item to cart:", error);
         }
@@ -159,8 +164,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
                     <button
                         type="button"
                         onClick={() => handleDateSelection(0)}
-                        className={`px-3 py-8 text-sm border rounded-md ${selectedDate === today ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100"} ${isPast4PM ? "opacity-50 cursor-not-allowed" : ""}`}
-                        disabled={isPast4PM}
+                        className={`px-3 py-8 text-sm border rounded-md ${selectedDate === today ? "bg-persian-rose-500 text-white" : "hover:bg-gray-100"} ${isPast6PM ? "opacity-50 cursor-not-allowed" : ""}`}
+                        disabled={isPast6PM}
                     >
                         Today ({dayjs().format("MMM DD")})
                     </button>
@@ -184,7 +189,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
                         type="date"
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        min={isPast4PM ? dayjs().add(1, "day").format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD")}
+                        min={isPast6PM ? dayjs().add(1, "day").format("YYYY-MM-DD") : dayjs().format("YYYY-MM-DD")}
                         onKeyDown={(e) => e.preventDefault()}
                         className={`p-2 border w-full rounded-md ${![dayjs().format("YYYY-MM-DD"), dayjs().add(1, "day").format("YYYY-MM-DD"), dayjs().add(2, "day").format("YYYY-MM-DD")].includes(selectedDate) ? "border-persian-rose-500" : ""}`}
                     />

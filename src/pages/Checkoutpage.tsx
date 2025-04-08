@@ -59,6 +59,7 @@ const Checkoutpage: React.FC = () => {
                                 <h1 className='font-medium text-xl'>
                                     Sender Information
                                 </h1>
+                                <hr />
                                 <div className='w-full p-3 gap-5'>
                                     <div className='gap-3 lg:flex-none lg:grid lg:grid-cols-2 '>
                                         <div className='w-full text-start'>
@@ -83,6 +84,7 @@ const Checkoutpage: React.FC = () => {
                                 <h1 className='font-medium text-xl'>
                                     Recipient Information
                                 </h1>
+                                <hr />
                                 <div className='w-full flex  flex-col  p-3 gap-5'>
                                     <div className='gap-3 lg:flex-none lg:grid lg:grid-cols-2 '>
                                         <div className='w-full text-start'>
