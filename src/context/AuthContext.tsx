@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import { fetchLogin, fetchLogout, fetchUser } from '../services/apiService';  // Importing the fetchUser function
 import { AuthContextType, User } from '../types/AuthContextTypes';
@@ -90,13 +90,4 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     )
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
-};
-
-
+export { AuthContext }
