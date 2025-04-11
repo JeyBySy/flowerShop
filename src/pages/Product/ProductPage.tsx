@@ -7,6 +7,7 @@ import { CartAddItemType } from "../../types/cartTypes";
 // import { CartAddItemType } from "../../types/cartTypes";
 import ProductForm from "./ProductForm"
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useToast } from '../../hooks/useToast';
 
 const ProductPage: React.FC = () => {
     const { id } = useParams<{ id: string; }>();
@@ -14,6 +15,7 @@ const ProductPage: React.FC = () => {
     const { addToCart, cart, } = useCart();
     const navigate = useNavigate();
     const location = useLocation();
+    const { addToast } = useToast()
 
     const { product, loading, error } = useProductDetails(id || "");
 
@@ -23,12 +25,17 @@ const ProductPage: React.FC = () => {
     const handleAddToCart = (cartPayload: CartAddItemType) => {
         if (!user || user?.userData.role === "guest") {
             navigate('/login', { state: { from: location.pathname } });
+            return
         }
 
         if (!cart?.id) return // Handle cart ID is not available
 
         try {
             addToCart(cartPayload);
+            addToast({
+                message: `Add to cart successfully`,
+                type: "success"
+            })
 
         } catch (err) {
             console.error("Failed to add item to cart:", err);
