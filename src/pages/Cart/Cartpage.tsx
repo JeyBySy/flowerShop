@@ -4,9 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import './cart.css'
 import { motion } from 'framer-motion'
 import { useCart } from '../../hooks/useCart'
+import { Trash2 } from 'lucide-react'
+import { useAuth } from '../../hooks/useAuth'
+import { useToast } from '../../hooks/useToast'
 
 const Cartpage: React.FC = () => {
     const navigate = useNavigate();
+    const { user } = useAuth()
+    const { addToast } = useToast()
     const { cart, selectedCarts, setSelectedCarts, removeCart } = useCart();
     const allSelected = selectedCarts.length === cart?.CartItems.length && selectedCarts.length > 0;
 
@@ -21,6 +26,14 @@ const Cartpage: React.FC = () => {
     };
 
     const handleCheckout = () => {
+        if (!user || user?.userData.role === "guest") {
+            navigate('/login', { state: { from: location.pathname } });
+            addToast({
+                message: "Session logout",
+                type: "info"
+            })
+            return
+        }
         navigate('/checkout', { state: { selectedCarts } });
     };
 
@@ -105,9 +118,9 @@ const Cartpage: React.FC = () => {
                                                 <p className=' w-full text-sm text-persian-rose-600'>{item.deliveryTime}</p>
                                             </td>
                                             <td className="text-center h-full">
-                                                <div className="flex justify-center">
-                                                    <button className="text-red-500 w-full h-[80px] px-4  hover:bg-red-500 hover:text-white transition" onClick={() => { removeCart(item.id) }}>Delete</button>
-                                                    <button className="text-red-500 w-full h-[80px] px-4 hover:bg-red-500 hover:text-white transition">Delete</button>
+                                                <div className="flex justify-center items-center">
+                                                    <button className="text-red-500 w-full h-[85px] px-4  transition flex items-center justify-center" onClick={() => { removeCart(item.id) }}><Trash2 /></button>
+                                                    {/* <button className="text-red-500 w-full h-[80px] px-4 hover:bg-red-500 hover:text-white transition">Delete</button> */}
                                                 </div>
                                             </td>
                                         </tr>
