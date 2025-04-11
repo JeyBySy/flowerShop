@@ -5,11 +5,9 @@ import dayjs from 'dayjs'
 import { motion } from 'framer-motion';
 import { useDeliveryDateTime } from '../../hooks/useDeliveryDateTime';
 import { useCart } from '../../hooks/useCart'
-import { useToast } from '../../hooks/useToast';
 
 const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
     const { id, name, price, stock, variants, averageRating, ProductRatings } = data;
-    const { addToast } = useToast()
     const {
         selectedDate,
         setSelectedDate,
@@ -62,10 +60,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ data, addToCartEvent }) => {
         };
         try {
             addToCartEvent(cartPayload);
-            addToast({
-                message: `Add to cart successfully`,
-                type: "success"
-            })
         } catch (error) {
             console.error("Failed to add item to cart:", error);
         }
