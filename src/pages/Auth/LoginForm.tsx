@@ -21,13 +21,8 @@ const LoginForm: React.FC = () => {
         setErrorMessage(''); // Clear previous errors
         try {
             await login(email, password);
-
-            addToast({
-                message: 'Logged in successfully!',
-                type: 'success'
-            });
-
             navigate(location.state?.from || "/", { replace: true });
+
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (error) {
             addToast({
